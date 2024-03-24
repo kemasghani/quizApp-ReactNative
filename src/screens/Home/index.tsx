@@ -11,10 +11,13 @@ import { QuizCard } from '../../components/QuizCard';
 
 import { styles } from './styles';
 import { QUIZZES } from '../../data/quizzes';
+import CustomButton from '../../components/PrimaryButton';
+
 
 export function Home() {
   const [quizzes, setQuizzes] = useState(QUIZZES);
   const [levels, setLevels] = useState([1, 2, 3]);
+
 
   const { navigate } = useNavigation();
 
@@ -47,6 +50,10 @@ export function Home() {
         <Level title="Mudah" type="EASY" onPress={() => handleLevelFilter(1)} isChecked={levels.includes(1)} />
         <Level title="Sedang" type="MEDIUM" onPress={() => handleLevelFilter(2)} isChecked={levels.includes(2)} />
         <Level title="Sulit" type="HARD" onPress={() => handleLevelFilter(3)} isChecked={levels.includes(3)} />
+      </View>
+
+      <View style={{ alignItems: 'center' }}>
+        <CustomButton title="Press me" onPress={() => navigate('login')} />
       </View>
 
       <FlatList
