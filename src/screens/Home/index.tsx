@@ -1,3 +1,5 @@
+import React from "react";
+import Back from "../../assets/back.svg";
 import { useEffect, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import { Trophy } from 'phosphor-react-native';
@@ -35,16 +37,16 @@ export function Home() {
   return (
     <View style={styles.container}>
       <Header
-        icon={Trophy}
-        title="Vamos estudar"
+        icon={Back}
+        title="Penalaran Umum"
         subtitle="Treine seus conhecimento"
         onPress={() => navigate('history')}
       />
 
       <View style={styles.levels}>
-        <Level title="Fácil" type="EASY" onPress={() => handleLevelFilter(1)} isChecked={levels.includes(1)} />
-        <Level title="Médio" type="MEDIUM" onPress={() => handleLevelFilter(2)} isChecked={levels.includes(2)} />
-        <Level title="Difícil" type="HARD" onPress={() => handleLevelFilter(3)} isChecked={levels.includes(3)} />
+        <Level title="Mudah" type="EASY" onPress={() => handleLevelFilter(1)} isChecked={levels.includes(1)} />
+        <Level title="Sedang" type="MEDIUM" onPress={() => handleLevelFilter(2)} isChecked={levels.includes(2)} />
+        <Level title="Sulit" type="HARD" onPress={() => handleLevelFilter(3)} isChecked={levels.includes(3)} />
       </View>
 
       <FlatList

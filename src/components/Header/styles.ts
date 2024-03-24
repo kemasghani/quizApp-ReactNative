@@ -9,16 +9,16 @@ export const styles = StyleSheet.create({
     paddingTop: 58,
     paddingBottom: 24,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    columnGap: 17,
     alignItems: 'center'
   },
   title: {
-    fontSize: 24,
+    fontSize: 15,
     color: THEME.COLORS.GREY_100,
     fontFamily: THEME.FONTS.BOLD,
   },
   subtitle: {
-    fontSize: 14,
+    fontSize: 10,
     color: THEME.COLORS.GREY_100,
     fontFamily: THEME.FONTS.REGULAR,
   },
@@ -28,6 +28,5 @@ export const styles = StyleSheet.create({
     borderRadius: 6,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: THEME.COLORS.GREY_800
   }
 });

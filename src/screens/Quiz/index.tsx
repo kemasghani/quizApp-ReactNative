@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
 import { Alert, BackHandler, Text, View } from 'react-native';
 import Animated, {
@@ -30,9 +31,7 @@ import { OutlineButton } from '../../components/OutlineButton';
 import { ProgressBar } from '../../components/ProgressBar';
 import { OverlayFeedback } from '../../components/OverlayFeedback';
 
-interface Params {
-  id: string;
-}
+
 
 type QuizProps = typeof QUIZ[0];
 
