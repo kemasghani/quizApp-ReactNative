@@ -7,6 +7,7 @@ import { Finish } from "../screens/Finish";
 import { History } from "../screens/History";
 import { Register } from '../screens/Register';
 import { Login } from '../screens/Login';
+import Navigation from "../navigation";
 const { Navigator, Screen, Group } = createNativeStackNavigator();
 
 export function AppRoutes() {
@@ -16,8 +17,8 @@ export function AppRoutes() {
         headerShown: false,
       }}
     >
-      <Screen name="dashboard" component={Dashboard} />
 
+      <Screen name="navigation" component={Navigation} />
 
 
       <Group screenOptions={{ gestureEnabled: false }}>
@@ -25,6 +26,7 @@ export function AppRoutes() {
         <Screen name="finish" component={Finish} />
       </Group>
 
+      <Screen name="dashboard" component={Dashboard} />
       <Screen name="home" component={Home} />
       <Screen
         name="history"
