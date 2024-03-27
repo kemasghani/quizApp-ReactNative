@@ -5,30 +5,34 @@ export const QUIZ = [
     level: 1,
     questions: [
       {
-        title: 'Os Hooks são uma forma de trabalharmos com funções no React em vez de classes. useState e useEffect são exemplos de hooks bem utilizados. Porém, ainda não é possível criar nossos próprios hooks.',
+        title: 'Siapa presiden di Indonesia?',
         alternatives: [
-          'Verdadeiro',
-          'Falso'
+          'Jokowi',
+          'SBY',
+          'Megawati',
+          'Prabowo'
         ],
         correct: 0
       },
       {
-        title: 'A imutabilidade no React é muito importante porque se mutarmos diretamente o valor de um estado em vez de substituí-lo por um novo valor, não ocorre corretamente uma nova renderização do seu componente.',
+        title: 'Siapa orang yang berkuasa di Indonesia ?',
         alternatives: [
-          'Verdadeiro',
-          'Falso'
+          'Presiden',
+          'Mentri',
+          'Panglima',
+          'DPR'
         ],
         correct: 0
       },
       {
-        title: 'Sobre a renderização no React, assinale a alternativa incorreta:',
+        title: 'Berapa 1+1 ?',
         alternatives: [
-          'Há dois casos comuns em que um componente React é renderizado: a renderização inicial do componente e atualizações de estado.',
-          'As re-renderizações normalmente não recriam todos os componentes como a renderização inicial',
-          'Uma atualização de um estado de um componente pai pode ocasionar a re-renderização de um componente filho (aninhado).',
-          'O React não segue um fluxo definido ao renderizar uma tela, podendo variar bastante as etapas do processo.'
+          '2',
+          '3',
+          '4',
+          '5'
         ],
-        correct: 0  
+        correct: 0
       },
     ]
   },

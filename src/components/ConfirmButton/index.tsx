@@ -12,7 +12,7 @@ export function ConfirmButton({ ...rest }: TouchableOpacityProps) {
       {...rest}
     >
       <Text style={styles.title}>
-        Confirmar
+        Konfirmasi
       </Text>
 
       <Check

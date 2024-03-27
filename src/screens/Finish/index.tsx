@@ -23,14 +23,14 @@ export function Finish() {
       <Stars />
 
       <View style={styles.message}>
-        <Text style={styles.title}>Parabéns!</Text>
+        <Text style={styles.title}>Selamat !</Text>
 
         <Text style={styles.subtitle}>
-          Você acertou {points} de {total} questões
+          Anda memiliki total benar {points} dari {total} soal
         </Text>
       </View>
 
-      <Button title="Ir para o início" onPress={() => navigate("home")} />
+      <Button title="Back to home" onPress={() => navigate("home")} />
     </View>
   );
 }
