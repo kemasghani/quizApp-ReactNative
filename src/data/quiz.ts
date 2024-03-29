@@ -1,7 +1,7 @@
 export const QUIZ = [
   {
     id: '1',
-    title: 'Utilizando Estados',
+    title: 'Penalaran Umum',
     level: 1,
     questions: [
       {
@@ -38,181 +38,186 @@ export const QUIZ = [
   },
   {
     id: '2',
-    title: 'Utilizando Typescript',
+    title: 'Penalaran Umum',
     level: 2,
     questions: [
       {
-        title: "Que tipo de atribuição é esta variável, `const fullName: string = 'Dylan Israel';`?",
+        title: 'Siapa presiden di Indonesia?',
         alternatives: [
-          'Explicita',
-          'Implícita'
+          'Jokowi',
+          'SBY',
+          'Megawati',
+          'Prabowo'
         ],
         correct: 0
       },
       {
-        title: "Qual é o tipo de `const exemplo = ['Dylan']`?",
+        title: 'Siapa orang yang berkuasa di Indonesia ?',
         alternatives: [
-          'unknown[]',
-          'string',
-          'string[]',
-          'any[]'
+          'Presiden',
+          'Mentri',
+          'Panglima',
+          'DPR'
         ],
-        correct: 2
+        correct: 0
       },
       {
-        title: "keyof pode ser usado com assinaturas de índice para extrair o tipo de índice.",
+        title: 'Berapa 1+1 ?',
         alternatives: [
-          'Verdadeiro',
-          'False',
+          '2',
+          '3',
+          '4',
+          '5'
         ],
         correct: 0
       },
     ]
   },
   {
-    id: '3',
-    title: 'React Navigation',
+    id: '2',
+    title: 'Penalaran Umum',
     level: 2,
     questions: [
       {
-        title: 'Qual a melhor descrição para identificar o Stack Navigator?',
+        title: 'Siapa presiden di Indonesia?',
         alternatives: [
-          'Adiciona um menu fixo na parte inferior do dispositivo, facilitando o acesso a telas utilizadas com mais frequência.',
-          'Ao abrir uma nova tela, essa nova tela é colocada no topo da pilha de navegação e ao voltar telas, as mesmas são removidas dessa pilha.',
-          'Adiciona um menu lateral, ocupando toda a altura do dispositivo. No primeiro momento esse menu fica escondido e você consegue abrir o menu arrastando a tela.'
-        ],
-        correct: 1
-      },
-      {
-        title: 'Ao “tipar” as rotas, você tem a vantagem de no momento da navegação saber se uma rota recebe parâmetros ou não e qual o formato dos parâmetros.',
-        alternatives: [
-          'Verdadeiro.',
-          'Falso'
+          'Jokowi',
+          'SBY',
+          'Megawati',
+          'Prabowo'
         ],
         correct: 0
       },
       {
-        title: 'Sobre o NavigationContainer é correto afirmar.',
+        title: 'Siapa orang yang berkuasa di Indonesia ?',
         alternatives: [
-          'O NavigationContainer é o componente no qual criamos uma rota na aplicação, passando para ele as propriedades "name" e "component".',
-          'O NavigationContainer  é um “hook” exportado de dentro do  react navigation que nos permite acessar funções como o "navigate" e o "goBack".',
-          'O NavigationContainer é um contexto que compartilha com nossa aplicação, todas as rotas e propriedades de navegação.'
+          'Presiden',
+          'Mentri',
+          'Panglima',
+          'DPR'
         ],
-        correct: 2
+        correct: 0
+      },
+      {
+        title: 'Berapa 1+1 ?',
+        alternatives: [
+          '2',
+          '3',
+          '4',
+          '5'
+        ],
+        correct: 0
       },
     ]
   },
   {
-    id: '4',
-    title: 'Styled Components',
+    id: '2',
+    title: 'Penalaran Umum',
     level: 3,
     questions: [
       {
-        title: 'CSS-in-JS é a estratégia de estilo pela qual o JavaScript é usado para estilizar componentes.',
+        title: 'Siapa presiden di Indonesia?',
         alternatives: [
-          'Verdadeiro',
-          'Falso'
+          'Jokowi',
+          'SBY',
+          'Megawati',
+          'Prabowo'
         ],
         correct: 0
       },
       {
-        title: 'Assinale abaixo a alternativa que não corresponde a uma característica do Styled Components.',
+        title: 'Siapa orang yang berkuasa di Indonesia ?',
         alternatives: [
-          'Realizar a importação default do styled e  e utilizá-lo para criar os componentes (ex.: styled.View).',
-          'É possível tanto criar componentes estilizados predefinidos com o "styled." quanto repassar componentes personalizados para ele por styled().',
-          'A forma de estilizar os componentes se assemelha bastante ao que utilizamos quando trabalhamos diretamente com CSS (letras minúsculas, separadas por hífen e com ponto e vírgula ao final).',
-          'É possível personalizar apenas as estilizações dos componentes (prop style) via styled, ou seja, não é possível configurar outras propriedades/atributos do componente.'
+          'Presiden',
+          'Mentri',
+          'Panglima',
+          'DPR'
         ],
-        correct: 1
+        correct: 0
       },
       {
-        title: 'Com o Styled Components é possível isolar a estrutura do componente da sua estilização.',
+        title: 'Berapa 1+1 ?',
         alternatives: [
-          'Verdadeiro',
-          'Falso'
+          '2',
+          '3',
+          '4',
+          '5'
         ],
         correct: 0
       },
     ]
   },
   {
-    id: '5',
-    title: 'Local Storage',
-    level: 2,
-    questions: [
-      {
-        title: 'Qual dos seguintes métodos salva informações no AsyncStorage?',
-        alternatives: [
-          'AsyncStorage.removeItem',
-          'AsyncStorage.setItem',
-          'AsyncStorage.getItem'
-        ],
-        correct: 1
-      },
-      {
-        title: 'O que melhor descreve o PropDrilling?',
-        alternatives: [
-          'Estratégia onde você repassa propriedades entre componentes até você chegar no componente desejado.',
-          'Estratégia onde você salva informações localmente no dispositivo (storage) e acessar quando precisar.',
-          'Estratégia onde você compartilha informações entre componentes através de contextos (Context API).'
-        ],
-        correct: 1
-      },
-      {
-        title: 'Qual a maneira correta de salvar objetos no AsyncStorage?',
-        alternatives: [
-          "await AsyncStorage.setItem('@app:key', { id: 1, name: 'Item 1' });",
-          "await AsyncStorage.getItem('@app:key', JSON.stringify({ id: 1, name: 'Item 1' }));",
-          "await AsyncStorage.setItem('@app:key', JSON.stringify({ id: 1, name: 'Item 1' }));"
-        ],
-        correct: 2
-      },
-    ]
-  },
-  {
-    id: '6',
-    title: 'React Native',
+    id: '2',
+    title: 'Penalaran Umum',
     level: 1,
     questions: [
       {
-        title: 'Assinale a alternativa correta sobre React Native:',
+        title: 'Siapa presiden di Indonesia?',
         alternatives: [
-          'React Native é um framework Javascript baseado no React capaz de criar aplicações apenas para Android e iOS.',
-          'Diferentemente do React, o React Native é construído totalmente pela comunidade e não tem nenhuma relação com o Facebook.',
-          'Com o React Native você consegue manter quase toda a sua aplicação pelo Javascript e manipular código nativo caso necessário.',
-          'Apesar do destaque do ReactJS na Web, o React Native não é muito utilizado atualmente no mercado de trabalho da área mobile.'
+          'Jokowi',
+          'SBY',
+          'Megawati',
+          'Prabowo'
         ],
-        correct: 2
+        correct: 0
       },
       {
-        title: 'Assinale a alternativa incorreta sobre React Native CLI e Expo',
+        title: 'Siapa orang yang berkuasa di Indonesia ?',
         alternatives: [
-          'Tanto com React Native CLI quanto com Expo é possível criar aplicações para iOS e Android.',
-          'React Native CLI é a maneira mais "crua" de se criar um projeto React Native. Já o Expo traz mais funcionalidades em cima dessa base, por exemplo o Expo Go.',
-          'Com o Expo é possível testar aplicações iOS pelo Expo Go caso você tenha um dispositivo físico iOS mesmo que não tenha um sistema macOS, o que não é possível pela React Native CLI.',
-          'A documentação oficial do React Native recomenda apenas a React Native CLI, nem chegando a mencionar o Expo.'
+          'Presiden',
+          'Mentri',
+          'Panglima',
+          'DPR'
         ],
-        correct: 3
+        correct: 0
       },
       {
-        title: 'Sobre o Expo, assinale a alternativa correta:',
+        title: 'Berapa 1+1 ?',
         alternatives: [
-          'Expo tem dois caminhos tradicionais ao criar um projeto: Managed Workflow e Bare Workflow.',
-          'Managed Workflow é a maneira de criar projetos onde desde o início você tem acesso ao seu código nativo.',
-          'Com o Bare Workflow você não pode utilizar em nenhum momento o Expo Go.',
-          'A configuração do ambiente React Native para Managed Workflow é mais complexa do que para Bare Workflow'
+          '2',
+          '3',
+          '4',
+          '5'
         ],
-        correct: 3
+        correct: 0
+      },
+    ]
+  },
+  {
+    id: '2',
+    title: 'Penalaran Umum',
+    level: 3,
+    questions: [
+      {
+        title: 'Siapa presiden di Indonesia?',
+        alternatives: [
+          'Jokowi',
+          'SBY',
+          'Megawati',
+          'Prabowo'
+        ],
+        correct: 0
       },
       {
-        title: 'Sobre componentização em React Native, escolha a alternativa incorreta:',
+        title: 'Siapa orang yang berkuasa di Indonesia ?',
         alternatives: [
-          'Componentizar é uma forma de reaproveitar trechos de código em vários locais do seu código.',
-          'Uma das vantagens da componentização é simplificar um componente muito complexo em múltiplos componentes menores, facilitando assim na manutenção do código.',
-          'Apesar de ajudar no reaproveitamento e simplificação do código, componentizar reduz a produtividade e legibilidade do projeto.',
-          'Nenhuma está correta.'
+          'Presiden',
+          'Mentri',
+          'Panglima',
+          'DPR'
         ],
-        correct: 3
+        correct: 0
+      },
+      {
+        title: 'Berapa 1+1 ?',
+        alternatives: [
+          '2',
+          '3',
+          '4',
+          '5'
+        ],
+        correct: 0
       },
     ]
   },

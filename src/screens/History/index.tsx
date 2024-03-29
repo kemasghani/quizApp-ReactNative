@@ -41,12 +41,12 @@ export function History() {
   function handleRemove(id: string, index: number) {
     swipeableRefs.current?.[index].close();
 
-    Alert.alert("Remover", "Deseja remover esse registro?", [
+    Alert.alert("Hapus", "Apakah anda ingin menghapus riwayat ?", [
       {
-        text: "Sim",
+        text: "Iya",
         onPress: () => remove(id),
       },
-      { text: "Não", style: "cancel" },
+      { text: "Tidak", style: "cancel" },
     ]);
   }
 

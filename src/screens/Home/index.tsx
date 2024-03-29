@@ -51,11 +51,6 @@ export function Home() {
         <Level title="Sedang" type="MEDIUM" onPress={() => handleLevelFilter(2)} isChecked={levels.includes(2)} />
         <Level title="Sulit" type="HARD" onPress={() => handleLevelFilter(3)} isChecked={levels.includes(3)} />
       </View>
-
-      <View style={{ alignItems: 'center' }}>
-        <CustomButton title="Press me" onPress={() => navigate('login')} />
-      </View>
-
       <FlatList
         data={quizzes}
         keyExtractor={item => item.id}

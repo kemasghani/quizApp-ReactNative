@@ -2,10 +2,15 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Home } from "../screens/Home";
+import { Finish } from "../screens/Finish";
+import { Login } from "../screens/Login";
+import { Register } from "../screens/Register";
 import { Dashboard } from "../screens/Dashboard";
-import ProfileTab from "../screens/Profile";
-import Riwayat from "../screens/Riwayat";
+import { History } from "../screens/History";
+import { Quiz } from "../screens/Quiz";
 import Notifikasi from "../screens/Notifikasi";
+import Profile from "../screens/Profile";
 import { Ionicons } from "@expo/vector-icons";
 import CustomTabBar from "./customTabBar";
 
@@ -19,46 +24,137 @@ export default function Navigation() {
         tabBar={(props) => <CustomTabBar {...props} />} // Use CustomTabBar component
       >
         <Tab.Screen
-          name="DashboardTabs"
+          name="dashboard"
           component={Dashboard}
           options={{
             headerShown: false,
             tabBarLabel: "Beranda",
             tabBarIcon: ({ focused, color, size }) => (
-              <Ionicons name={focused ? "home" : "home-outline"} size={size} color={color} />
+              <Ionicons
+                name={focused ? "home" : "home-outline"}
+                size={size}
+                color={color}
+              />
             ),
           }}
         />
         <Tab.Screen
-          name="RiwayatTabs"
-          component={Riwayat}
+          name="history"
+          component={History}
           options={{
             headerShown: false,
             tabBarLabel: "Riwayat",
             tabBarIcon: ({ focused, color, size }) => (
-              <Ionicons name={focused ? "time" : "time-outline"} size={size} color={color} />
+              <Ionicons
+                name={focused ? "time" : "time-outline"}
+                size={size}
+                color={color}
+              />
             ),
           }}
         />
         <Tab.Screen
-          name="NotifikasiTabs"
+          name="notifikasi"
           component={Notifikasi}
           options={{
             headerShown: false,
             tabBarLabel: "Notifikasi",
             tabBarIcon: ({ focused, color, size }) => (
-              <Ionicons name={focused ? "notifications" : "notifications-outline"} size={size} color={color} />
+              <Ionicons
+                name={focused ? "notifications" : "notifications-outline"}
+                size={size}
+                color={color}
+              />
             ),
           }}
         />
         <Tab.Screen
-          name="ProfileTabs"
-          component={ProfileTab}
+          name="profile"
+          component={Profile}
           options={{
             headerShown: false,
             tabBarLabel: "Profile",
             tabBarIcon: ({ focused, color, size }) => (
-              <Ionicons name={focused ? "person" : "person-outline"} size={size} color={color} />
+              <Ionicons
+                name={focused ? "person" : "person-outline"}
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="home"
+          component={Home}
+          options={{
+            headerShown: false,
+            tabBarLabel: "Home",
+            tabBarIcon: ({ focused, color, size }) => (
+              <Ionicons
+                name={focused ? "person" : "person-outline"}
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="quiz"
+          component={Quiz}
+          options={{
+            headerShown: false,
+            tabBarLabel: "Quiz",
+            tabBarIcon: ({ focused, color, size }) => (
+              <Ionicons
+                name={focused ? "person" : "person-outline"}
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="finish"
+          component={Finish}
+          options={{
+            headerShown: false,
+            tabBarLabel: "Finish",
+            tabBarIcon: ({ focused, color, size }) => (
+              <Ionicons
+                name={focused ? "person" : "person-outline"}
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="login"
+          component={Login}
+          options={{
+            headerShown: false,
+            tabBarLabel: "Login",
+            tabBarIcon: ({ focused, color, size }) => (
+              <Ionicons
+                name={focused ? "person" : "person-outline"}
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="register"
+          component={Register}
+          options={{
+            headerShown: false,
+            tabBarLabel: "Register",
+            tabBarIcon: ({ focused, color, size }) => (
+              <Ionicons
+                name={focused ? "person" : "person-outline"}
+                size={size}
+                color={color}
+              />
             ),
           }}
         />

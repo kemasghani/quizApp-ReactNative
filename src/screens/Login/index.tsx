@@ -23,7 +23,7 @@ export function Login() {
           <Text style={styles.textLink}>Lupa Kata Sandi?</Text>
         </TouchableOpacity>
         <View style={{ alignContent: 'center', alignItems: 'center' }}>
-          <PrimaryButton title="Login" onPress={() => { }} />
+          <PrimaryButton title="Login" onPress={() => navigate('navigation')} />
           <View style={styles.footer}>
             <Text style={styles.footerText}>Belum Memiliki Akun? </Text>
             <TouchableOpacity onPress={() => navigate('register')}>

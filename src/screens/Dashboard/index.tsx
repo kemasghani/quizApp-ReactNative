@@ -1,7 +1,7 @@
 import React from "react";
 import Avatar from "../../assets/avatar.svg";
 import { useEffect, useState } from "react";
-import { FlatList, View, Text } from "react-native";
+import { FlatList, View, Text, Button } from "react-native"; // Added Button for testing
 import { Trophy } from "phosphor-react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Header } from "../../components/Header";
@@ -11,16 +11,20 @@ import { allMateri } from "../../data/materi";
 
 export function Dashboard() {
   const [quizzes, setQuizzes] = useState(allMateri);
+  const navigation = useNavigation();
 
-  const { navigate } = useNavigation();
+  const handleNavigate = (screenName) => {
+    console.log("Navigating to:", screenName);
+    navigation.navigate(screenName);
+  };
 
   return (
     <View style={styles.container}>
       <Header
         icon={Avatar}
         title="Selamat Pagi, Janice!"
-        subtitle="selamat belajar !"
-        onPress={() => navigate("history")}
+        subtitle="Selamat belajar!"
+        onPress={() => handleNavigate("history")}
       />
       <View style={styles.infoDashboard}>
         <View style={styles.nilai}>
@@ -39,7 +43,7 @@ export function Dashboard() {
           <MateriCard
             index={index}
             data={item}
-            onPress={() => navigate("home")}
+            onPress={() => handleNavigate("home")}
           />
         )}
         numColumns={2}

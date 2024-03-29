@@ -1,6 +1,6 @@
-import React from 'react';
-import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import { SvgXml } from 'react-native-svg';
+import React from "react";
+import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { SvgXml } from "react-native-svg";
 
 // Define your SVG code as a string
 const customSVG = `
@@ -17,17 +17,25 @@ const customSVG = `
 `;
 
 const CustomTabBar = ({ state, descriptors, navigation }) => {
+  const currentRouteName = state.routes[state.index].name;
+
+  if (currentRouteName === "home" || currentRouteName === "finish" || currentRouteName === "login" || currentRouteName === "register" || currentRouteName === "quiz") {
+    return null; // Don't render the tab bar on the 'home' screen
+  }
+
   return (
     <View style={styles.tabContainer}>
-      {state.routes.map((route, index) => {
+      {state.routes.slice(0, 4).map((route, index) => {
+        // Slice to only include first 4 routes
         const { options } = descriptors[route.key];
-        const label = options.tabBarLabel !== undefined ? options.tabBarLabel : route.name;
+        const label =
+          options.tabBarLabel !== undefined ? options.tabBarLabel : route.name;
 
         const isFocused = state.index === index;
 
         const onPress = () => {
           const event = navigation.emit({
-            type: 'tabPress',
+            type: "tabPress",
             target: route.key,
           });
 
@@ -45,13 +53,24 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
             {/* Custom SVG Background */}
             {isFocused && (
               <View style={styles.svgBackgroundContainer}>
-                <SvgXml xml={customSVG} width="63" height="75" style={styles.svgBackground} />
+                <SvgXml
+                  xml={customSVG}
+                  width="63"
+                  height="75"
+                  style={styles.svgBackground}
+                />
               </View>
             )}
             {/* Your Icon Component */}
-            {options.tabBarIcon({ focused: isFocused, color: 'white', size: 24 })}
+            {options.tabBarIcon({
+              focused: isFocused,
+              color: "white",
+              size: 24,
+            })}
             {/* Tab Label */}
-            <Text style={[styles.tabLabel, isFocused && styles.activeTabLabel]}>{label}</Text>
+            <Text style={[styles.tabLabel, isFocused && styles.activeTabLabel]}>
+              {label}
+            </Text>
           </TouchableOpacity>
         );
       })}
@@ -61,36 +80,36 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
 
 const styles = StyleSheet.create({
   tabContainer: {
-    flexDirection: 'row',
-    backgroundColor: '#8D8D99', // Background color of the tab bar
+    flexDirection: "row",
+    backgroundColor: "#8D8D99", // Background color of the tab bar
   },
   tabButton: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     paddingVertical: 10,
-    position: 'relative', // Required for positioning SVG behind the icon
+    position: "relative", // Required for positioning SVG behind the icon
   },
   activeTabButton: {
-    backgroundColor: 'transparent', // Make sure active tab button background is transparent
+    backgroundColor: "transparent", // Make sure active tab button background is transparent
   },
   svgBackgroundContainer: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
-    left: '50%',
+    left: "50%",
     transform: [{ translateX: -31.5 }], // Adjust translation based on SVG width
   },
   svgBackground: {
     // No need to set position, top, and left here
   },
   tabLabel: {
-    color: '#ffffff',
+    color: "#ffffff",
     marginTop: 4,
     fontSize: 12,
   },
   activeTabLabel: {
-    color: '#ffffff', // Adjust active tab label color if needed
-    fontWeight: 'bold', // Adjust active tab label style if needed
+    color: "#ffffff", // Adjust active tab label color if needed
+    fontWeight: "bold", // Adjust active tab label style if needed
   },
 });
 

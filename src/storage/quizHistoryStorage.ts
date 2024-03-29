@@ -11,7 +11,7 @@ export async function historyGetAll() {
 
     return history;
   } catch (error) {
-    Alert.alert('Opa', 'Não foi possível obter o histórico.');
+    Alert.alert('Opa', 'tidak dapat mendapatkan riwayat.');
 
     return [];
   }

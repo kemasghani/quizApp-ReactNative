@@ -3,37 +3,37 @@ import { CloudArrowUp, CodeSimple, ToggleLeft, PaintBucket, DeviceMobile, GitFor
 export const QUIZZES = [
   {
     id: '1',
-    title: 'Utilizando Estados',
+    title: 'Penalaran Umum',
     level: 1,
     svg: ToggleLeft,
   },
   {
     id: '2',
-    title: 'Utilizando Typescript',
+    title: 'Pengetahuan dan Pemahaman Umum',
     level: 2,
     svg: CodeSimple,
   },
   {
     id: '3',
-    title: 'Utilizando Navigation',
+    title: 'Pemahaman Bacaan dan Menulis',
     level: 2,
     svg: GitFork,
   },
   {
     id: '4',
-    title: 'Styled Components',
+    title: 'Pengetahuan Kuantitatif',
     level: 3,
     svg: PaintBucket,
   },
   {
     id: '5',
-    title: 'Async Storage',
+    title: 'Literasi',
     level: 2,
     svg: CloudArrowUp,
   },
   {
     id: '6',
-    title: 'React Native',
+    title: 'Penalaran Matematika',
     level: 1,
     svg: DeviceMobile,
   },
