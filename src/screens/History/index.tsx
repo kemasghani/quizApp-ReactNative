@@ -1,8 +1,9 @@
-import React from 'react';
+import React from "react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { View, ScrollView, Alert } from "react-native";
 import { HouseLine, Trash } from "phosphor-react-native";
+import HistoryIcon from '../../assets/history-icon.svg'
 import Animated, {
   Layout,
   SlideInRight,
@@ -61,9 +62,10 @@ export function History() {
   return (
     <View style={styles.container}>
       <Header
-        title="Histórico"
-        subtitle={`Seu histórico de estudos${"\n"}realizados`}
-        icon={HouseLine}
+        title="Riwayat"
+        subtitle={`Sejarah Pendidikan Anda${"\n"}telah dilakukan`}
+        icon1={null}
+        icon2={HistoryIcon}
         onPress={goBack}
       />
 

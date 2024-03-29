@@ -10,7 +10,10 @@ import { Dashboard } from "../screens/Dashboard";
 import { History } from "../screens/History";
 import { Quiz } from "../screens/Quiz";
 import Notifikasi from "../screens/Notifikasi";
+import { InputEmail } from "../screens/InputEmail";
+import { InputOTP } from "../screens/InputOTP";
 import Profile from "../screens/Profile";
+import { SuccessPass } from "../screens/SuccessPass";
 import { Ionicons } from "@expo/vector-icons";
 import CustomTabBar from "./customTabBar";
 
@@ -146,6 +149,51 @@ export default function Navigation() {
         <Tab.Screen
           name="register"
           component={Register}
+          options={{
+            headerShown: false,
+            tabBarLabel: "Register",
+            tabBarIcon: ({ focused, color, size }) => (
+              <Ionicons
+                name={focused ? "person" : "person-outline"}
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="inputEmail"
+          component={InputEmail}
+          options={{
+            headerShown: false,
+            tabBarLabel: "Register",
+            tabBarIcon: ({ focused, color, size }) => (
+              <Ionicons
+                name={focused ? "person" : "person-outline"}
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="inputOtp"
+          component={InputOTP}
+          options={{
+            headerShown: false,
+            tabBarLabel: "Register",
+            tabBarIcon: ({ focused, color, size }) => (
+              <Ionicons
+                name={focused ? "person" : "person-outline"}
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="successPass"
+          component={SuccessPass}
           options={{
             headerShown: false,
             tabBarLabel: "Register",

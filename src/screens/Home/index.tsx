@@ -40,7 +40,8 @@ export function Home() {
   return (
     <View style={styles.container}>
       <Header
-        icon={Back}
+        icon1={Back}
+        icon2={null}
         title="Penalaran Umum"
         subtitle="Treine seus conhecimento"
         onPress={() => navigate('history')}

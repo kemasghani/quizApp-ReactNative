@@ -3,43 +3,75 @@ import { THEME } from "../../styles/theme";
 
 export const styles = StyleSheet.create({
   scrollViewContent: {
-    backgroundColor: "#202024",
-    // flex: 1,
-    flexGrow: 1,
+    backgroundColor: THEME.COLORS.GREY_800,
+    height: "100%",
+  },
+  container: {
+    paddingTop: 50,
+    paddingHorizontal: 20,
   },
 
-  container: {
+  headerText: {
+    color: "#E1E0E6",
+    fontFamily: "Roboto_700Bold",
+    fontSize: 24,
+    fontStyle: "normal",
+    fontWeight: "700",
+    letterSpacing: 0.96,
+  },
+  profileContainer: {
+    flexDirection: "row",
+    marginTop: 40,
     alignItems: "center",
   },
-
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
+  profilePicture: {
+    width: 85,
+    height: 85,
+    borderRadius: 50,
+    backgroundColor: THEME.COLORS.GREY_700,
   },
-
+  profileInfo: {
+    justifyContent: "center",
+  },
+  nameText: {
+    color: "#E1E0E6",
+    fontFamily: "Roboto",
+    fontSize: 19,
+    fontStyle: "normal",
+    fontWeight: "400",
+    letterSpacing: 0.76,
+  },
+  emailText: {
+    color: "#E1E0E6",
+    fontFamily: "Roboto",
+    fontSize: 15,
+    fontStyle: "normal",
+    fontWeight: "400",
+    letterSpacing: 0.64,
+    opacity: 0.6,
+  },
   loginCard: {
-    marginTop: -50,
-    width: "80%",
+    marginTop: 0,
     height: "auto",
-    backgroundColor: THEME.COLORS.GREY_500,
-    padding: 28,
     borderRadius: 15,
-    marginBottom: 30,
+    display: "flex",
+    flexDirection: "column",
+    rowGap: 28,
   },
-
   inputContainer: {
     width: "100%",
     height: 37.903,
     borderRadius: 10,
     backgroundColor: "#E1E1E6",
     marginBottom: 16,
-    paddingLeft: 12
+    paddingLeft: 12,
   },
   input: {
     flex: 1,
     height: "100%",
     paddingRight: 30,
     display: "flex",
+    color: "black",
   },
   inputLabel: {
     color: "#FFF",
@@ -57,8 +89,6 @@ export const styles = StyleSheet.create({
     height: 100,
     justifyContent: "center",
     alignItems: "center",
-    display: "flex",
-    flexDirection: "row",
   },
   footerText: {
     color: "#FFF",
@@ -74,4 +104,9 @@ export const styles = StyleSheet.create({
     fontWeight: "500",
     letterSpacing: 0.48,
   },
+  singleInput: {
+    display: 'flex',
+    flexDirection: 'column',
+    rowGap: 7
+  }
 });

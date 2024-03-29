@@ -74,8 +74,8 @@ export const QUIZ = [
     ]
   },
   {
-    id: '2',
-    title: 'Penalaran Umum',
+    id: '3',
+    title: 'Pengetahuan dan Pemahaman Umum',
     level: 2,
     questions: [
       {
@@ -111,8 +111,8 @@ export const QUIZ = [
     ]
   },
   {
-    id: '2',
-    title: 'Penalaran Umum',
+    id: '4',
+    title: 'Pemahaman Bacaan dan Menulis',
     level: 3,
     questions: [
       {
@@ -148,8 +148,8 @@ export const QUIZ = [
     ]
   },
   {
-    id: '2',
-    title: 'Penalaran Umum',
+    id: '5',
+    title: 'Pengetahuan Kuantitatif',
     level: 1,
     questions: [
       {
@@ -185,8 +185,8 @@ export const QUIZ = [
     ]
   },
   {
-    id: '2',
-    title: 'Penalaran Umum',
+    id: '6',
+    title: 'Literasi',
     level: 3,
     questions: [
       {

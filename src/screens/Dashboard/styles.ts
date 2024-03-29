@@ -31,8 +31,10 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 20,
     paddingHorizontal: 40,
+    width: '45%',
   },
   peringkat: {
+    width: '45%',
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -44,22 +46,22 @@ export const styles = StyleSheet.create({
   },
   numberNilai: {
     color: "#4ECB71",
-    fontSize: 60,
+    fontSize: 50,
     fontWeight: '600',
   },
   textNilai: {
     color: "#4ECB71",
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: '400',
   },
   numberPeringkat: {
     color: "#FBA94C",
-    fontSize: 60,
+    fontSize: 50,
     fontWeight: '600',
   },
   textPeringkat: {
     color: "#FBA94C",
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: '400',
   },
 });

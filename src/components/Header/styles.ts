@@ -23,10 +23,21 @@ export const styles = StyleSheet.create({
     fontFamily: THEME.FONTS.REGULAR,
   },
   history: {
-    width: 44,
+    width: '100%',
     height: 44,
     borderRadius: 6,
+    display: 'flex',
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    columnGap: 12
+  },
+  history2: {
+    width: '100%',
+    height: 44,
+    borderRadius: 6,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   }
 });

@@ -26,7 +26,8 @@ export const styles = StyleSheet.create({
     height: 37.903,
     borderRadius: 10,
     backgroundColor: '#E1E1E6',
-    marginBottom: 16
+    marginBottom: 16,
+    paddingLeft: 12
   },
   input: {
     flex: 1,

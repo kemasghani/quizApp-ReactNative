@@ -25,7 +25,7 @@ export function HistoryCard({ data }: Props) {
         </Text>
 
         <Text style={styles.subtitle}>
-          Você acertou {data.points} de {data.questions}
+          Total benar {data.points} dari {data.questions} soal
         </Text>
       </View>
 

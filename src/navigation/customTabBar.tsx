@@ -19,7 +19,7 @@ const customSVG = `
 const CustomTabBar = ({ state, descriptors, navigation }) => {
   const currentRouteName = state.routes[state.index].name;
 
-  if (currentRouteName === "home" || currentRouteName === "finish" || currentRouteName === "login" || currentRouteName === "register" || currentRouteName === "quiz") {
+  if (currentRouteName === "home" || currentRouteName === "finish" || currentRouteName === "inputEmail" || currentRouteName === "login" || currentRouteName === "register" || currentRouteName === "quiz") {
     return null; // Don't render the tab bar on the 'home' screen
   }
 

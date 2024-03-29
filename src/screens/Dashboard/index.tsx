@@ -21,7 +21,8 @@ export function Dashboard() {
   return (
     <View style={styles.container}>
       <Header
-        icon={Avatar}
+        icon1={Avatar}
+        icon2={null}
         title="Selamat Pagi, Janice!"
         subtitle="Selamat belajar!"
         onPress={() => handleNavigate("history")}

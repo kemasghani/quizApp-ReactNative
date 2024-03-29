@@ -17,9 +17,9 @@ export function Login() {
         </View>
         <Text style={styles.inputLabel}>Kata Sandi</Text>
         <View style={styles.inputContainer}>
-          <TextInput style={styles.input} />
+          <TextInput style={styles.input} secureTextEntry={true} />
         </View>
-        <TouchableOpacity style={{ alignItems: 'flex-end', marginBottom: 13 }} onPress={() => navigate('register')}>
+        <TouchableOpacity style={{ alignItems: 'flex-end', marginBottom: 13 }} onPress={() => navigate('inputEmail')}>
           <Text style={styles.textLink}>Lupa Kata Sandi?</Text>
         </TouchableOpacity>
         <View style={{ alignContent: 'center', alignItems: 'center' }}>
