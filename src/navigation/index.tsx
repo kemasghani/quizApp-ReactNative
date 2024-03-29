@@ -8,6 +8,8 @@ import Riwayat from "../screens/Riwayat";
 import Notifikasi from "../screens/Notifikasi";
 import { Ionicons } from "@expo/vector-icons";
 import CustomTabBar from "./customTabBar";
+import { History } from "../screens/History";
+import { Home } from "../screens/Home";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -31,7 +33,7 @@ export default function Navigation() {
         />
         <Tab.Screen
           name="RiwayatTabs"
-          component={Riwayat}
+          component={History}
           options={{
             headerShown: false,
             tabBarLabel: "Riwayat",
@@ -42,7 +44,7 @@ export default function Navigation() {
         />
         <Tab.Screen
           name="NotifikasiTabs"
-          component={Notifikasi}
+          component={Home}
           options={{
             headerShown: false,
             tabBarLabel: "Notifikasi",

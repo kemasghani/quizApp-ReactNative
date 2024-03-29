@@ -39,7 +39,7 @@ export function Dashboard() {
           <MateriCard
             index={index}
             data={item}
-            onPress={() => navigate("home")}
+            onPress={() => navigate('history')}
           />
         )}
         numColumns={2}
