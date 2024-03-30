@@ -11,6 +11,7 @@ import { Login } from "../screens/Login";
 import { InputOTP } from "../screens/InputOTP";
 import { SuccessPass } from "../screens/SuccessPass";
 import Navigation from "../navigation";
+import { Ranking } from "../screens/Ranking";
 const { Navigator, Screen, Group } = createNativeStackNavigator();
 
 export function AppRoutes() {
@@ -22,6 +23,7 @@ export function AppRoutes() {
     >
       <Screen name="login" component={Login} />
       <Screen name="navigation" component={Navigation} />
+      <Screen name="ranking" component={Ranking} />
       <Group screenOptions={{ gestureEnabled: false }}>
         <Screen name="quiz" component={Quiz} />
         <Screen name="finish" component={Finish} />
@@ -34,6 +36,7 @@ export function AppRoutes() {
       <Screen name="history" component={History} />
       <Screen name="inputEmail" component={InputEmail} />
       <Screen name="register" component={Register} />
+
     </Navigator>
   );
 }

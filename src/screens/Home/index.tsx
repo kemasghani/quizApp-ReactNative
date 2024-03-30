@@ -12,6 +12,7 @@ import { QuizCard } from '../../components/QuizCard';
 import { styles } from './styles';
 import { QUIZZES } from '../../data/quizzes';
 import CustomButton from '../../components/PrimaryButton';
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 
 export function Home() {
@@ -52,6 +53,7 @@ export function Home() {
         <Level title="Sedang" type="MEDIUM" onPress={() => handleLevelFilter(2)} isChecked={levels.includes(2)} />
         <Level title="Sulit" type="HARD" onPress={() => handleLevelFilter(3)} isChecked={levels.includes(3)} />
       </View>
+
       <FlatList
         data={quizzes}
         keyExtractor={item => item.id}

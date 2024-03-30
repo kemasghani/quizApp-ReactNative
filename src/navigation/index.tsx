@@ -16,6 +16,7 @@ import Profile from "../screens/Profile";
 import { SuccessPass } from "../screens/SuccessPass";
 import { Ionicons } from "@expo/vector-icons";
 import CustomTabBar from "./customTabBar";
+import { Ranking } from "../screens/Ranking";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -43,7 +44,7 @@ export default function Navigation() {
         />
         <Tab.Screen
           name="history"
-          component={History}
+          component={Ranking}
           options={{
             headerShown: false,
             tabBarLabel: "Riwayat",
