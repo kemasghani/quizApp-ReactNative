@@ -9,7 +9,8 @@ export const styles = StyleSheet.create({
     paddingTop: 58,
     paddingBottom: 24,
     columnGap: 17,
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 35
   },
   scrollViewContent: {
     backgroundColor: THEME.COLORS.GREY_800,
@@ -17,16 +18,15 @@ export const styles = StyleSheet.create({
   },
   container: {
     paddingHorizontal: 20,
-    paddingBottom: 20,
   },
 
   headerText: {
-    color: "#E1E0E6",
+    color: "#00875F",
     fontFamily: "Roboto_700Bold",
-    fontSize: 25,
+    fontSize: 20,
     fontStyle: "normal",
     fontWeight: "700",
-    letterSpacing: 0.96,
+    marginTop: 10,
   },
   profileContainer: {
     flexDirection: "row",
