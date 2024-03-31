@@ -71,7 +71,7 @@ const ProfileScreen: React.FC = () => {
           </TouchableOpacity>
         </View>
         <View style={{ marginTop: 30 }}>
-          <Text style={styles.subTitle}>Informasi Akuns</Text>
+          <Text style={styles.subTitle}>Informasi Akun</Text>
           <View style={styles.accountInfoContainer}>
             <View style={styles.textContainer}>
               <Text style={styles.regularText}>Nama Pengguna</Text>
