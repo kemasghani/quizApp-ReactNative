@@ -27,6 +27,7 @@ export function InputOTP() {
           <TextInput
             style={[styles.input, { textAlign: "center" }]} // Center the placeholder text
             placeholder="masukan kode anda"
+            keyboardType="numeric"
           />
         </View>
       </View>

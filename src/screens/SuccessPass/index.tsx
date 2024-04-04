@@ -16,8 +16,7 @@ export function SuccessPass() {
         />
       </View>
       <Text style={styles.subTitle}>
-            Selamat, kata sandi telah berhasil diubah Tolong masuk kembali
-            dengan kata sandi baru
+            Selamat, kata sandi telah berhasil diubah, silahkan buka email anda untuk melihat password baru
           </Text>
       <PrimaryButton title="Masuk Kembali" onPress={() => navigate("login")} />
     </View>
