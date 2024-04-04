@@ -16,6 +16,8 @@ import Profile from "../screens/Profile";
 import { SuccessPass } from "../screens/SuccessPass";
 import { Ionicons } from "@expo/vector-icons";
 import CustomTabBar from "./customTabBar";
+import { Ranking } from "../screens/Ranking";
+import ProfileEditScreen from "../screens/ProfileEdit";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -43,7 +45,7 @@ export default function Navigation() {
         />
         <Tab.Screen
           name="history"
-          component={History}
+          component={Ranking}
           options={{
             headerShown: false,
             tabBarLabel: "Riwayat",
@@ -194,6 +196,21 @@ export default function Navigation() {
         <Tab.Screen
           name="successPass"
           component={SuccessPass}
+          options={{
+            headerShown: false,
+            tabBarLabel: "Register",
+            tabBarIcon: ({ focused, color, size }) => (
+              <Ionicons
+                name={focused ? "person" : "person-outline"}
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="editProfile"
+          component={ProfileEditScreen}
           options={{
             headerShown: false,
             tabBarLabel: "Register",

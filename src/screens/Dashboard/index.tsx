@@ -8,6 +8,7 @@ import { Header } from "../../components/Header";
 import { MateriCard } from "../../components/MateriCard";
 import { styles } from "./styles";
 import { allMateri } from "../../data/materi";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export function Dashboard() {
   const [quizzes, setQuizzes] = useState(allMateri);
@@ -37,6 +38,9 @@ export function Dashboard() {
           <Text style={styles.textPeringkat}>Peringkat</Text>
         </View>
       </View>
+      <TouchableOpacity style={{ alignItems: 'flex-end', marginTop: 20 }} onPress={() => handleNavigate('ranking')}>
+        <Text style={styles.textLink}>Lihat Peringkat</Text>
+      </TouchableOpacity>
       <FlatList
         data={quizzes}
         keyExtractor={(item) => item.id}

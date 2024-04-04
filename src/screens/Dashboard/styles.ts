@@ -64,4 +64,14 @@ export const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '400',
   },
+  textLink: {
+    color: "#ffffff",
+    fontSize: 12,
+    fontStyle: "normal",
+    fontWeight: "500",
+    letterSpacing: 0.48,
+    //underline the text
+    textDecorationLine: 'underline',
+
+  },
 });

@@ -16,5 +16,12 @@ export const styles = StyleSheet.create({
   },
   cards: {
     paddingTop: 32,
+  },
+  textLink: {
+    color: '#FBA94C',
+    fontSize: 12,
+    fontStyle: 'normal',
+    fontWeight: '500',
+    letterSpacing: 0.48,
   }
 });
