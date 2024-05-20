@@ -27,17 +27,33 @@ export const styles = StyleSheet.create({
     fontWeight: "300",
     color: "white",
   },
-  spinnerText: {
-    color: "white",
-  },
+
   inputContainer: {
     width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    rowGap: 5,
     height: 37.903,
     borderRadius: 10,
     backgroundColor: "#E1E1E6",
     marginBottom: 16,
     paddingLeft: 12,
-    marginTop: 33,
+    marginTop: 44,
+  },
+  spinnerText: {
+    color: "white",
+  },
+  inputContainer2: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    rowGap: 5,
+    height: 37.903,
+    borderRadius: 10,
+    backgroundColor: "#E1E1E6",
+    marginBottom: 16,
+    paddingLeft: 12,
+    marginTop: 4,
   },
   input: {
     flex: 1,

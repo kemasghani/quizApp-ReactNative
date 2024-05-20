@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 const ProfileEditScreen: React.FC = () => {
   // Define default values for inputs
   const defaultName = "John Doe";
+  const defaultAge= "18";
   const defaultUsername = "johndoe";
   const defaultEmail = "johndoe@example.com";
   const defaultPassword = "********"; // Default password placeholder
@@ -33,7 +34,6 @@ const ProfileEditScreen: React.FC = () => {
             <TextInput
               style={styles.input}
               defaultValue={defaultName}
-              editable={false}
               placeholderTextColor="black"
             />
           </View>
@@ -44,32 +44,32 @@ const ProfileEditScreen: React.FC = () => {
             <TextInput
               style={styles.input}
               defaultValue={defaultUsername}
-              editable={false}
               placeholderTextColor="black"
+            />
+          </View>
+        </View>
+        <View style={styles.singleInput}>
+          <Text style={styles.inputLabel}>Umur</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              defaultValue={defaultAge}
+              placeholderTextColor="black"
+              keyboardType="numeric"
             />
           </View>
         </View>
         <View style={styles.singleInput}>
           <Text style={styles.inputLabel}>Domisili</Text>
           <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.input}
-              defaultValue={defaultEmail}
-              editable={false}
-              placeholderTextColor="black"
-            />
-          </View>
-        </View>
-        <View style={styles.singleInput}>
-          <Text style={styles.inputLabel}>Dropdown List</Text>
-          <View style={styles.inputContainer}>
             <Picker
               selectedValue={selectedValue}
-              style={{ height: 50, width: '100%' }}
+              style={{ height: 50, width: '100%', transform: [{ translateY: -7 }], }}
               onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}>
-              <Picker.Item label="10" value="10" />
-              <Picker.Item label="11" value="11" />
-              <Picker.Item label="12" value="12" />
+              <Picker.Item label="-- Pilih domisili --" value="Pilih domisili" />
+              <Picker.Item label="Bandung" value="Bandung" />
+              <Picker.Item label="Surabaya" value="Surabaya" />
+              <Picker.Item label="Medan" value="Medan" />
             </Picker>
           </View>
         </View>
@@ -77,7 +77,7 @@ const ProfileEditScreen: React.FC = () => {
           <PrimaryButton
             title="Simpan"
             onPress={() => {
-              navigate("Profile");
+              navigate("profile");
             }}
           />
         </View>

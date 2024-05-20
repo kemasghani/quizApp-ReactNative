@@ -7,7 +7,8 @@ export const styles = StyleSheet.create({
   },
 
   container: {
-    alignItems: "center",
+    backgroundColor: "#202024",
+    flex: 1
   },
 
   title: {

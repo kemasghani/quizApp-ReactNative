@@ -7,13 +7,16 @@ import Avatar from "../../assets/avatar.svg";
 import EditIcon from "../../assets/edit-icon.svg";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 
 const ProfileScreen: React.FC = () => {
   // Define default values for inputs
   const defaultName = "Janice";
   const defaultUsername = "janice";
   const defaultEmail = "ja.nice@gmail.com";
-  const defaultPassword = "********"; // Default password placeholder
+  const defaultPassword = "****"; // Default password placeholder
 
   const { navigate } = useNavigation();
   return (
@@ -66,7 +69,7 @@ const ProfileScreen: React.FC = () => {
             <Text style={styles.nameText}>{defaultName}</Text>
             <Text style={styles.emailText}>{defaultEmail}</Text>
           </View>
-          <TouchableOpacity style={styles.editIcon} onPress={() => navigate('editProfile')}>
+          <TouchableOpacity style={styles.editIcon} onPress={() => navigate('profiledit')}>
             <EditIcon />
           </TouchableOpacity>
         </View>
@@ -95,7 +98,12 @@ const ProfileScreen: React.FC = () => {
           <TouchableOpacity style={styles.settingBtn} onPress={() => navigate('login')}>
             <Text style={[styles.regularText, styles.boldText]}>Kebijakan Privasi</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.settingBtn} onPress={() => navigate('login')}>
+          <TouchableOpacity style={styles.settingBtn} onPress={async () => {
+            // Save keluar = true to local storage
+            await AsyncStorage.setItem('keluar', 'true');
+            // Navigate to the logout screen or perform any other logout actions
+            navigate('login');
+          }}>
             <Text style={[styles.regularText, styles.boldText]}>Keluar</Text>
           </TouchableOpacity>
         </View>

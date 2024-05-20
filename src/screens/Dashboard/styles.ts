@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     marginTop: 32,
   },
   cards: {
-    paddingTop: 32,
+    paddingTop: 2,
   },
   infoDashboard: {
     marginTop: 30,
@@ -66,12 +66,14 @@ export const styles = StyleSheet.create({
   },
   textLink: {
     color: "#ffffff",
+    width: '100%',
     fontSize: 12,
     fontStyle: "normal",
     fontWeight: "500",
     letterSpacing: 0.48,
     //underline the text
-    textDecorationLine: 'underline',
-
+    backgroundColor: THEME.COLORS.GREY_800,
+    paddingBottom: 20,
+    textDecorationLine: 'underline'
   },
 });

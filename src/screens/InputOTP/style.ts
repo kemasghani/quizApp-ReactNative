@@ -44,6 +44,9 @@ export const styles = StyleSheet.create({
     display: "flex",
     fontSize: 20,
   },
+  spinnerText: {
+    color: "white",
+  },
   textLink: {
     color: "#FBA94C",
     fontSize: 12,

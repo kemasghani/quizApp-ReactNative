@@ -1,10 +1,23 @@
 import React, { useEffect } from "react";
 import { View, StyleSheet, Animated, Image, Easing } from "react-native";
+import { Audio } from "expo-av"; // Import Audio from expo-av for sound playback
 
 const SplashScreen = () => {
   const scaleAnim = new Animated.Value(0); // Initialize scaleAnim as an Animated.Value
 
   useEffect(() => {
+    const playSound = async () => {
+      const soundObject = new Audio.Sound(); // Create a new Audio.Sound object
+      try {
+        await soundObject.loadAsync(require("../../assets/opening.mp3")); // Load your sound file (replace 'sound.mp3' with your actual sound file)
+        await soundObject.playAsync(); // Play the loaded sound
+      } catch (error) {
+        console.log("Error loading sound:", error);
+      }
+    };
+
+    playSound(); // Call the playSound function when the component mounts
+
     Animated.timing(scaleAnim, {
       toValue: 1,
       duration: 3000, // Adjust duration as needed

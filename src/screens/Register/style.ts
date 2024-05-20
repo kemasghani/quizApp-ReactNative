@@ -33,13 +33,33 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "#E1E1E6",
     marginBottom: 16,
-    paddingLeft: 12
+    paddingLeft: 12,
   },
   input: {
     flex: 1,
     height: "100%",
     paddingRight: 30,
     display: "flex",
+  },
+  picker: {
+    flex: 1,
+    height: 40,
+    paddingRight: 30,
+    paddingBottom: 10,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    transform: [{ translateY: -5 }],
+  },
+  spinnerText: {
+    color: "white",
+  },
+  inputContainer2: {
+    width: "100%",
+    borderRadius: 10,
+    backgroundColor: "#E1E1E6",
+    marginBottom: 16,
+    paddingLeft: 12,
   },
   inputLabel: {
     color: "#FFF",

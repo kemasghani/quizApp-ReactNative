@@ -9,9 +9,10 @@ import { History } from "../screens/History";
 import { Register } from "../screens/Register";
 import { Login } from "../screens/Login";
 import { InputOTP } from "../screens/InputOTP";
+import { InputNewPass } from "../screens/InputNewPass";
 import { Ranking } from "../screens/Ranking";
 import { SuccessPass } from "../screens/SuccessPass";
-import ProfileEditScreen from "../screens/ProfileEdit";
+import profiledit from "../screens/ProfileEdit";
 import Navigation from "../navigation";
 const { Navigator, Screen, Group } = createNativeStackNavigator();
 
@@ -32,12 +33,13 @@ export function AppRoutes() {
       <Screen name="dashboard" component={Dashboard} />
       <Screen name="successPass" component={SuccessPass} />
       <Screen name="inputOtp" component={InputOTP} />
+      <Screen name="inputNewPass" component={InputNewPass} />
       <Screen name="home" component={Home} />
       <Screen name="ranking" component={Ranking} />
       <Screen name="history" component={History} />
       <Screen name="inputEmail" component={InputEmail} />
       <Screen name="register" component={Register} />
-      <Screen name="profiledit" component={ProfileEditScreen} />
+      <Screen name="profiledit" component={profiledit} />
 
     </Navigator>
   );

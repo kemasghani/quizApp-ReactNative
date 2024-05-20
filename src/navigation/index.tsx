@@ -12,6 +12,7 @@ import { Quiz } from "../screens/Quiz";
 import Notifikasi from "../screens/Notifikasi";
 import { InputEmail } from "../screens/InputEmail";
 import { InputOTP } from "../screens/InputOTP";
+import { InputNewPass } from "../screens/InputNewPass";
 import Profile from "../screens/Profile";
 import { SuccessPass } from "../screens/SuccessPass";
 import { Ionicons } from "@expo/vector-icons";
@@ -45,7 +46,7 @@ export default function Navigation() {
         />
         <Tab.Screen
           name="history"
-          component={Ranking}
+          component={History}
           options={{
             headerShown: false,
             tabBarLabel: "Riwayat",
@@ -134,6 +135,21 @@ export default function Navigation() {
           }}
         />
         <Tab.Screen
+          name="ranking"
+          component={Ranking}
+          options={{
+            headerShown: false,
+            tabBarLabel: "ranking",
+            tabBarIcon: ({ focused, color, size }) => (
+              <Ionicons
+                name={focused ? "time" : "time-outline"}
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
           name="login"
           component={Login}
           options={{
@@ -194,6 +210,21 @@ export default function Navigation() {
           }}
         />
         <Tab.Screen
+          name="inputNewPass"
+          component={InputNewPass}
+          options={{
+            headerShown: false,
+            tabBarLabel: "Register",
+            tabBarIcon: ({ focused, color, size }) => (
+              <Ionicons
+                name={focused ? "person" : "person-outline"}
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
           name="successPass"
           component={SuccessPass}
           options={{
@@ -209,7 +240,7 @@ export default function Navigation() {
           }}
         />
         <Tab.Screen
-          name="editProfile"
+          name="profiledit"
           component={ProfileEditScreen}
           options={{
             headerShown: false,

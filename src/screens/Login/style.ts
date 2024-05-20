@@ -67,7 +67,10 @@ export const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontWeight: '500',
     letterSpacing: 0.48,
-  }
+  },
+  spinnerText: {
+    color: "white",
+  },
 
 
 });

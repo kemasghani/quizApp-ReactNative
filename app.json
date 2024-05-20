@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "ignitequiz",
+    "name": "smarta",
     "slug": "ignitequiz",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -24,10 +24,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.kemas.ignitequiz"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "353f8d1b-1818-4807-8fae-fc9025c56450"
+      }
     }
   }
 }

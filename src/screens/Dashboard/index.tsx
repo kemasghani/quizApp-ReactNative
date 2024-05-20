@@ -9,6 +9,7 @@ import { MateriCard } from "../../components/MateriCard";
 import { styles } from "./styles";
 import { allMateri } from "../../data/materi";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export function Dashboard() {
   const [quizzes, setQuizzes] = useState(allMateri);
@@ -24,7 +25,7 @@ export function Dashboard() {
       <Header
         icon1={Avatar}
         icon2={null}
-        title="Selamat Pagi, Janice!"
+        title="Selamat Pagi, Kemas!"
         subtitle="Selamat belajar!"
         onPress={() => handleNavigate("history")}
       />
@@ -38,7 +39,10 @@ export function Dashboard() {
           <Text style={styles.textPeringkat}>Peringkat</Text>
         </View>
       </View>
-      <TouchableOpacity style={{ alignItems: 'flex-end', marginTop: 20 }} onPress={() => handleNavigate('ranking')}>
+      <TouchableOpacity
+        style={{marginTop: 20, width: '100%'}}
+        onPress={() => handleNavigate("ranking")}
+      >
         <Text style={styles.textLink}>Lihat Peringkat</Text>
       </TouchableOpacity>
       <FlatList
