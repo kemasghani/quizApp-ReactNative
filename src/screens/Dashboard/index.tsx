@@ -16,10 +16,18 @@ export function Dashboard() {
   const navigation = useNavigation();
 
   const handleNavigate = (screenName) => {
-    console.log("Navigating to:", screenName);
     navigation.navigate(screenName);
   };
+  useEffect(() => {
+    const checkLoggedIn = async () => {
+      const loggedIn = await AsyncStorage.getItem("loggedIn");
+      if (!loggedIn) {
+        navigation.navigate("login");
+      }
+    };
 
+    checkLoggedIn();
+  }, []);
   return (
     <View style={styles.container}>
       <Header
@@ -40,7 +48,7 @@ export function Dashboard() {
         </View>
       </View>
       <TouchableOpacity
-        style={{marginTop: 20, width: '100%'}}
+        style={{ marginTop: 20, width: "100%" }}
         onPress={() => handleNavigate("ranking")}
       >
         <Text style={styles.textLink}>Lihat Peringkat</Text>

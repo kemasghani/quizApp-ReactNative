@@ -1,8 +1,6 @@
 import React from "react";
-import { View, Text, ScrollView, TextInput } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { styles } from "./style";
-import PrimaryButton from "../../components/PrimaryButton";
-import { Header } from "../../components/Header";
 import Avatar from "../../assets/avatar.svg";
 import EditIcon from "../../assets/edit-icon.svg";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -11,7 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
-const ProfileScreen: React.FC = () => {
+const Profile: React.FC = () => {
   // Define default values for inputs
   const defaultName = "Janice";
   const defaultUsername = "janice";
@@ -112,4 +110,4 @@ const ProfileScreen: React.FC = () => {
   );
 };
 
-export default ProfileScreen;
+export default Profile;

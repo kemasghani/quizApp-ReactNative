@@ -12,6 +12,7 @@ import { InputOTP } from "../screens/InputOTP";
 import { InputNewPass } from "../screens/InputNewPass";
 import { Ranking } from "../screens/Ranking";
 import { SuccessPass } from "../screens/SuccessPass";
+import Profile from "../screens/Profile";
 import profiledit from "../screens/ProfileEdit";
 import Navigation from "../navigation";
 const { Navigator, Screen, Group } = createNativeStackNavigator();
@@ -23,8 +24,8 @@ export function AppRoutes() {
         headerShown: false,
       }}
     >
-      <Screen name="login" component={Login} />
       <Screen name="navigation" component={Navigation} />
+      <Screen name="login" component={Login} />
       <Group screenOptions={{ gestureEnabled: false }}>
         <Screen name="quiz" component={Quiz} />
         <Screen name="finish" component={Finish} />
@@ -39,8 +40,8 @@ export function AppRoutes() {
       <Screen name="history" component={History} />
       <Screen name="inputEmail" component={InputEmail} />
       <Screen name="register" component={Register} />
+      <Screen name="profile" component={Profile} />
       <Screen name="profiledit" component={profiledit} />
-
     </Navigator>
   );
 }
