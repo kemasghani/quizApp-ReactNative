@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { CommonActions } from '@react-navigation/native';
 
 import { Button } from "../../components/Button";
 import { Stars } from "../../components/Stars";
@@ -15,8 +16,17 @@ interface Params {
 export function Finish() {
   const route = useRoute();
   const { points, total } = route.params as Params;
+  const navigation = useNavigation();
 
-  const { navigate } = useNavigation();
+  const handleBackToDashboard = () => {
+    console.log("Navigating back to dashboard...");
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: 'dashboard' }],
+      })
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -24,13 +34,12 @@ export function Finish() {
 
       <View style={styles.message}>
         <Text style={styles.title}>Selamat !</Text>
-
         <Text style={styles.subtitle}>
           Anda memiliki total benar {points} dari {total} soal
         </Text>
       </View>
 
-      <Button title="Back to home" onPress={() => navigate("home")} />
+      <Button title="Back to Dashboard" onPress={handleBackToDashboard} />
     </View>
   );
 }

@@ -98,7 +98,9 @@ const Profile: React.FC = () => {
           </TouchableOpacity>
           <TouchableOpacity style={styles.settingBtn} onPress={async () => {
             // Save keluar = true to local storage
+            await AsyncStorage.clear();
             await AsyncStorage.setItem('keluar', 'true');
+            // clear all async storage
             // Navigate to the logout screen or perform any other logout actions
             navigate('login');
           }}>

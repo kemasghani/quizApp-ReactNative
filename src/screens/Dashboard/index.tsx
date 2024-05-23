@@ -1,23 +1,21 @@
-import React from "react";
-import Avatar from "../../assets/avatar.svg";
-import { useEffect, useState } from "react";
-import { FlatList, View, Text, Button } from "react-native"; // Added Button for testing
-import { Trophy } from "phosphor-react-native";
+import React, { useEffect, useState } from "react";
+import { FlatList, View, Text, TouchableOpacity } from "react-native"; // Added TouchableOpacity for testing
 import { useNavigation } from "@react-navigation/native";
+import Avatar from "../../assets/avatar.svg";
 import { Header } from "../../components/Header";
 import { MateriCard } from "../../components/MateriCard";
 import { styles } from "./styles";
 import { allMateri } from "../../data/materi";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export function Dashboard() {
   const [quizzes, setQuizzes] = useState(allMateri);
   const navigation = useNavigation();
 
-  const handleNavigate = (screenName) => {
-    navigation.navigate(screenName);
+  const handleNavigate = (screenName, params) => {
+    navigation.navigate(screenName, params);
   };
+
   useEffect(() => {
     const checkLoggedIn = async () => {
       const loggedIn = await AsyncStorage.getItem("loggedIn");
@@ -27,7 +25,8 @@ export function Dashboard() {
     };
 
     checkLoggedIn();
-  }, []);
+  }, [navigation]);
+
   return (
     <View style={styles.container}>
       <Header
@@ -60,7 +59,7 @@ export function Dashboard() {
           <MateriCard
             index={index}
             data={item}
-            onPress={() => handleNavigate("home")}
+            onPress={() => handleNavigate("home", { id: item.id })}
           />
         )}
         numColumns={2}

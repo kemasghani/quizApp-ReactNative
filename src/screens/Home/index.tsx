@@ -1,9 +1,8 @@
-import React from "react";
-import Back from "../../assets/back.svg";
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from "react";
 import { FlatList, View } from 'react-native';
-import { Trophy } from 'phosphor-react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
+import axios from 'axios';
+import Back from "../../assets/back.svg";
 
 import { Level } from '../../components/Level';
 import { Header } from '../../components/Header';
@@ -11,14 +10,16 @@ import { QuizCard } from '../../components/QuizCard';
 
 import { styles } from './styles';
 import { QUIZZES } from '../../data/quizzes';
-import CustomButton from '../../components/PrimaryButton';
-import { TouchableOpacity } from "react-native-gesture-handler";
-
+import { allMateri } from "../../data/materi";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export function Home() {
   const [quizzes, setQuizzes] = useState(QUIZZES);
   const [levels, setLevels] = useState([1, 2, 3]);
-
+  const [grades, setGrades] = useState([]);
+  const route = useRoute();
+  const { id } = route.params;
+  const [selectedMateri, setSelectedMateri] = useState(() => allMateri.find(materi => materi.id === id));
 
   const { navigate } = useNavigation();
 
@@ -35,15 +36,57 @@ export function Home() {
   }
 
   useEffect(() => {
-    setQuizzes(QUIZZES.filter(quiz => levels.includes(quiz.level)));
-  }, [levels]);
+    setSelectedMateri(allMateri.find(materi => materi.id === id));
+  }, [id]);
+
+  useEffect(() => {
+    console.log("selectedMateri:", selectedMateri);
+
+    setQuizzes(QUIZZES.filter(quiz => levels.includes(quiz.level) && quiz.title === selectedMateri?.title));
+  }, [levels, selectedMateri]);
+
+  // Get userId from AsyncStorage and fetch grades
+  useEffect(() => {
+    const fetchUserIdAndGrades = async () => {
+      try {
+        const userId = await AsyncStorage.getItem('userId');
+        console.log('userId:Home', userId);
+
+        if (userId) {
+          console.log('userId:', userId);
+
+          const response = await axios.get(`http://192.168.137.1:3000/grade/user/${userId}`);
+          setGrades(response.data);
+          console.log('grades:', response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching user id or grades:', error);
+      }
+    };
+    fetchUserIdAndGrades();
+  }, [selectedMateri]);
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        route.params.id = null; // Reset the id parameter when unfocusing
+        setSelectedMateri(null);
+      };
+    }, [route.params])
+  );
+
+  const checkAttempted = (quizId) => {
+    const result = grades.some(grade => grade.quizId === quizId);
+
+    return result;
+  };
 
   return (
     <View style={styles.container}>
       <Header
         icon1={Back}
         icon2={null}
-        title="Penalaran Umum"
+        title={selectedMateri?.title}
         subtitle="Treine seus conhecimento"
         onPress={() => navigate('history')}
       />
@@ -61,6 +104,8 @@ export function Home() {
           <QuizCard
             index={index}
             data={item}
+            attempted={checkAttempted(item.id)}
+            grades={grades} // Pass the grades data as a prop
             onPress={() => navigate('quiz', { id: item.id })}
           />
         )}

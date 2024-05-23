@@ -16,6 +16,8 @@ import { GestureDetector, Gesture } from "react-native-gesture-handler";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Audio } from "expo-av";
 import * as Haptics from "expo-haptics";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CommonActions } from '@react-navigation/native';
 
 import { styles } from "./styles";
 import { THEME } from "../../styles/theme";
@@ -51,6 +53,7 @@ export function Quiz() {
   const cardPosition = useSharedValue(0);
 
   const { navigate } = useNavigation();
+  const navigation = useNavigation();
 
   const route = useRoute();
   const { id } = route.params as Params;
@@ -69,31 +72,8 @@ export function Quiz() {
   function handleSkipConfirm() {
     Alert.alert("Dilewati", "Apakah Anda benar-benar ingin melewati pertanyaan ini ?", [
       { text: "Iya", onPress: () => handleNextQuestion() },
-      { text: "Tidak", onPress: () => {} },
+      { text: "Tidak", onPress: () => { } },
     ]);
-  }
-
-  async function handleFinished() {
-    await historyAdd({
-      id: new Date().getTime().toString(),
-      title: quiz.title,
-      level: quiz.level,
-      points,
-      questions: quiz.questions.length,
-    });
-
-    navigate("finish", {
-      points: String(points),
-      total: String(quiz.questions.length),
-    });
-  }
-
-  function handleNextQuestion() {
-    if (currentQuestion < quiz.questions.length - 1) {
-      setCurrentQuestion((prevState) => prevState + 1);
-    } else {
-      handleFinished();
-    }
   }
 
   async function handleConfirm() {
@@ -102,20 +82,92 @@ export function Quiz() {
     }
 
     if (quiz.questions[currentQuestion].correct === alternativeSelected) {
-      setPoints((prevState) => prevState + 1);
-
-      await playSound(true);
+      setPoints((prevState) => {
+        const updatedPoints = prevState + 1;
+        console.log("pointsafter:", updatedPoints);
+        return updatedPoints;
+      });
 
       setStatusReply(1);
-      handleNextQuestion();
+
+      // If it's the last question, delay handleFinished
+      if (currentQuestion === quiz.questions.length - 1) {
+        setTimeout(() => {
+          handleFinished(); // Call handleFinished after the state update
+        }, 0);
+      }
+
+      await playSound(true);
+      // setStatusReply(1);
     } else {
       await playSound(false);
-
       setStatusReply(2);
       shakeAnimation();
     }
 
     setAlternativeSelected(null);
+    if (currentQuestion < quiz.questions.length - 1) {
+      setCurrentQuestion((prevState) => prevState + 1);
+    }
+    // handleNextQuestion();
+  }
+
+  async function handleFinished() {
+    try {
+      const userId = await AsyncStorage.getItem('userId');
+      const response = await fetch(`http://192.168.137.1:3000/grade/user/${userId}/${quiz.id}`);
+
+      if (response.ok) {
+        // Data exists, update it
+        await fetch(`http://192.168.137.1:3000/grade/user/${userId}/${quiz.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            points,
+            correctAnswer: points,
+            completedAt: new Date().toISOString(),
+          }),
+        });
+      } else {
+        // Data doesn't exist, create new
+        await fetch('http://192.168.137.1:3000/grade', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId: userId,
+            quizId: quiz.id,
+            title: quiz.title,
+            level: quiz.level,
+            points,
+            questionsCount: quiz.questions.length,
+            correctAnswer: points,
+            completedAt: new Date().toISOString(),
+          }),
+        });
+      }
+
+      console.log("pointshandlefinish:", points);
+
+      navigate("finish", {
+        points: String(points),
+        total: String(quiz.questions.length),
+      });
+    } catch (error) {
+      console.error('Error saving quiz progress:', error);
+      Alert.alert("Error", "Failed to save quiz progress. Please try again later.");
+    }
+  }
+
+  function handleNextQuestion() {
+    if (currentQuestion < quiz.questions.length - 1) {
+      setCurrentQuestion((prevState) => prevState + 1);
+    } else {
+      handleFinished();
+    }
   }
 
   function handleStop() {
@@ -127,10 +179,16 @@ export function Quiz() {
       {
         text: "Iya",
         style: "destructive",
-        onPress: () => navigate("home"),
+        onPress: () => {
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: 'dashboard' }],
+            })
+          );
+        },
       },
     ]);
-
     return true;
   }
 
@@ -141,7 +199,6 @@ export function Quiz() {
       withTiming(3, { duration: 400, easing: Easing.bounce }),
       withTiming(0, undefined, (finished) => {
         "worklet";
-
         if (finished) {
           runOnJS(handleNextQuestion)();
         }
@@ -220,13 +277,13 @@ export function Quiz() {
   });
 
   useEffect(() => {
+    console.log("id:", id);
+
     const quizSelected = QUIZ.filter((item) => item.id === id)[0];
 
     setQuiz(quizSelected);
     setIsLoading(false);
-  }, []);
 
-  useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
       handleStop
