@@ -25,5 +25,11 @@ export const styles = StyleSheet.create({
     backgroundColor: THEME.COLORS.DANGER_LIGHT,
     alignItems: 'center',
     justifyContent: 'center'
-  }
+  },
+  noHistoryText: {
+    textAlign: "center",
+    marginTop: 20,
+    fontSize: 16,
+    color: THEME.COLORS.GREY_100,
+  },
 });

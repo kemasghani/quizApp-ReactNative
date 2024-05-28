@@ -66,6 +66,7 @@ export const styles = StyleSheet.create({
   },
   textLink: {
     color: "#ffffff",
+    textAlign: "center",
     width: '100%',
     fontSize: 12,
     fontStyle: "normal",

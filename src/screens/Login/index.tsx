@@ -36,7 +36,7 @@ export function Login() {
       console.log("Request Body:", requestBody);
 
       const response = await axios.post(
-        "http://192.168.137.1:3000/user/login",
+        "https://server-side-quiz-react-native.vercel.app/user/login",
         requestBody, // Use the requestBody in the post request
         {
           headers: {
@@ -46,12 +46,14 @@ export function Login() {
       );
       // Extract the user ID from the response
       const userId = response.data.data.id;
+      const username = response.data.data.username;
 
       console.log(response);
 
       // Store the user ID and email in AsyncStorage
       await AsyncStorage.setItem("userId", userId);
       await AsyncStorage.setItem("tokenEmail", email);
+      await AsyncStorage.setItem("username", username);
       await AsyncStorage.setItem("loggedIn", "true");
       navigate("dashboard");
     } catch (error) {

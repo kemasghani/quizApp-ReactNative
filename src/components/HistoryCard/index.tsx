@@ -10,6 +10,8 @@ export type HistoryProps = {
   points: number;
   questions: number;
   level: number;
+  correctAnswer: number;
+  questionsCount: number;
 }
 
 type Props = {
@@ -25,7 +27,7 @@ export function HistoryCard({ data }: Props) {
         </Text>
 
         <Text style={styles.subtitle}>
-          Total benar {data.points} dari {data.questions} soal
+          Total benar {data.correctAnswer} dari {data.questionsCount} soal
         </Text>
       </View>
 

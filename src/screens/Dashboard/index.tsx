@@ -10,16 +10,19 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export function Dashboard() {
   const [quizzes, setQuizzes] = useState(allMateri);
+  const [username, setUsername] = useState(AsyncStorage.getItem("username"));
   const navigation = useNavigation();
 
   const handleNavigate = (screenName, params) => {
     navigation.navigate(screenName, params);
   };
-
   useEffect(() => {
     const checkLoggedIn = async () => {
-      const loggedIn = await AsyncStorage.getItem("loggedIn");
-      if (!loggedIn) {
+      const loggedIn = await AsyncStorage.getItem("tokenEmail");
+      console.log(
+        `==========================================${loggedIn}============================================`
+      );
+      if (!loggedIn || loggedIn == null) {
         navigation.navigate("login");
       }
     };
@@ -32,7 +35,7 @@ export function Dashboard() {
       <Header
         icon1={Avatar}
         icon2={null}
-        title="Selamat Pagi, Kemas!"
+        title={`Selamat Datang, ${username}!`}
         subtitle="Selamat belajar!"
         onPress={() => handleNavigate("history")}
       />

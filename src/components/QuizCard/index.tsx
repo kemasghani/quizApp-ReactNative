@@ -6,8 +6,6 @@ import {
 } from "react-native";
 import React from "react";
 import { styles } from "./styles";
-import { THEME } from "../../styles/theme";
-
 import { LevelBars } from "../LevelBars";
 import { QUIZZES } from "../../data/quizzes";
 import Animated, { FadeInUp, FadeOutUp } from "react-native-reanimated";
@@ -17,7 +15,6 @@ type Props = TouchableOpacityProps & {
   data: (typeof QUIZZES)[0];
   attempted: boolean;
   grades: any[]; // Add grades prop
-
 };
 
 const TouchableOpacityAnimated =
@@ -34,7 +31,6 @@ export function QuizCard({ index, data, attempted, grades, ...rest }: Props) {
   const gradeData = getGradeData(data.id);
   // console.log("gradeData:", gradeData);
 
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -44,13 +40,20 @@ export function QuizCard({ index, data, attempted, grades, ...rest }: Props) {
       <View style={styles.cardInfo}>
         <View style={styles.skorInfo}>
           <Text style={styles.text}>Skor</Text>
-          <Text style={styles.number}>{gradeData != undefined ? gradeData?.points : "-"}</Text>
+          <Text style={styles.number}>
+            {gradeData != undefined ? gradeData?.points : "-"}
+          </Text>
         </View>
         <View style={styles.correctInfo}>
           <Text style={styles.text}>Benar</Text>
-          <Text style={styles.number}>{gradeData != undefined ? gradeData?.correctAnswer + '/' + gradeData?.questionsCount : "-"}</Text>
+          <Text style={styles.number}>
+            {gradeData != undefined
+              ? gradeData?.correctAnswer + "/" + gradeData?.questionsCount
+              : "-"}
+          </Text>
         </View>
       </View>
+
       <TouchableOpacityAnimated
         entering={FadeInUp.delay(index * 100)}
         exiting={FadeOutUp}

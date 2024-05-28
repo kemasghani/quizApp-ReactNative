@@ -5,9 +5,7 @@ import Avatar from "../../assets/avatar.svg";
 import EditIcon from "../../assets/edit-icon.svg";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Profile: React.FC = () => {
   // Define default values for inputs
@@ -18,7 +16,10 @@ const Profile: React.FC = () => {
 
   const { navigate } = useNavigation();
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={styles.scrollViewContent}>
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 1 }}
+      style={styles.scrollViewContent}
+    >
       <View style={styles.headerContainer}>
         <Text style={styles.headerText}>Profil</Text>
       </View>
@@ -60,14 +61,16 @@ const Profile: React.FC = () => {
           </View>
         </View> */}
       <View style={styles.container}>
-
         <View style={styles.profileContainer}>
           <Avatar style={styles.profilePicture} width={70} height={70} />
           <View style={styles.profileInfo}>
             <Text style={styles.nameText}>{defaultName}</Text>
             <Text style={styles.emailText}>{defaultEmail}</Text>
           </View>
-          <TouchableOpacity style={styles.editIcon} onPress={() => navigate('profiledit')}>
+          <TouchableOpacity
+            style={styles.editIcon}
+            onPress={() => navigate("profiledit")}
+          >
             <EditIcon />
           </TouchableOpacity>
         </View>
@@ -82,7 +85,9 @@ const Profile: React.FC = () => {
             </View>
             <View style={[styles.textContainer, styles.rightAlignedText]}>
               <Text style={[styles.regularText, styles.boldText]}>Janice</Text>
-              <Text style={[styles.regularText, styles.boldText]}>ja.nice@gmail.com</Text>
+              <Text style={[styles.regularText, styles.boldText]}>
+                ja.nice@gmail.com
+              </Text>
               <Text style={[styles.regularText, styles.boldText]}>Jakarta</Text>
               <Text style={[styles.regularText, styles.boldText]}>12</Text>
             </View>
@@ -90,20 +95,31 @@ const Profile: React.FC = () => {
         </View>
         <View style={{ marginTop: 30 }}>
           <Text style={styles.subTitle}>Pengaturan Akun</Text>
-          <TouchableOpacity style={styles.settingBtn} onPress={() => navigate('login')}>
+          <TouchableOpacity
+            style={styles.settingBtn}
+            onPress={() => navigate("login")}
+          >
             <Text style={[styles.regularText, styles.boldText]}>Tentang</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.settingBtn} onPress={() => navigate('login')}>
-            <Text style={[styles.regularText, styles.boldText]}>Kebijakan Privasi</Text>
+          <TouchableOpacity
+            style={styles.settingBtn}
+            onPress={() => navigate("login")}
+          >
+            <Text style={[styles.regularText, styles.boldText]}>
+              Kebijakan Privasi
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.settingBtn} onPress={async () => {
-            // Save keluar = true to local storage
-            await AsyncStorage.clear();
-            await AsyncStorage.setItem('keluar', 'true');
-            // clear all async storage
-            // Navigate to the logout screen or perform any other logout actions
-            navigate('login');
-          }}>
+          <TouchableOpacity
+            style={styles.settingBtn}
+            onPress={async () => {
+              // Save keluar = true to local storage
+              await AsyncStorage.clear();
+              await AsyncStorage.setItem("keluar", "true");
+              // clear all async storage
+              // Navigate to the logout screen or perform any other logout actions
+              navigate("dashboard");
+            }}
+          >
             <Text style={[styles.regularText, styles.boldText]}>Keluar</Text>
           </TouchableOpacity>
         </View>

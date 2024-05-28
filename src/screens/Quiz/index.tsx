@@ -16,8 +16,6 @@ import { GestureDetector, Gesture } from "react-native-gesture-handler";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Audio } from "expo-av";
 import * as Haptics from "expo-haptics";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { CommonActions } from '@react-navigation/native';
 
 import { styles } from "./styles";
 import { THEME } from "../../styles/theme";
@@ -32,6 +30,8 @@ import { ConfirmButton } from "../../components/ConfirmButton";
 import { OutlineButton } from "../../components/OutlineButton";
 import { ProgressBar } from "../../components/ProgressBar";
 import { OverlayFeedback } from "../../components/OverlayFeedback";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CommonActions } from '@react-navigation/native';
 
 type QuizProps = (typeof QUIZ)[0];
 
@@ -55,6 +55,7 @@ export function Quiz() {
   const { navigate } = useNavigation();
   const navigation = useNavigation();
 
+
   const route = useRoute();
   const { id } = route.params as Params;
 
@@ -76,50 +77,14 @@ export function Quiz() {
     ]);
   }
 
-  async function handleConfirm() {
-    if (alternativeSelected === null) {
-      return handleSkipConfirm();
-    }
-
-    if (quiz.questions[currentQuestion].correct === alternativeSelected) {
-      setPoints((prevState) => {
-        const updatedPoints = prevState + 1;
-        console.log("pointsafter:", updatedPoints);
-        return updatedPoints;
-      });
-
-      setStatusReply(1);
-
-      // If it's the last question, delay handleFinished
-      if (currentQuestion === quiz.questions.length - 1) {
-        setTimeout(() => {
-          handleFinished(); // Call handleFinished after the state update
-        }, 0);
-      }
-
-      await playSound(true);
-      // setStatusReply(1);
-    } else {
-      await playSound(false);
-      setStatusReply(2);
-      shakeAnimation();
-    }
-
-    setAlternativeSelected(null);
-    if (currentQuestion < quiz.questions.length - 1) {
-      setCurrentQuestion((prevState) => prevState + 1);
-    }
-    // handleNextQuestion();
-  }
-
   async function handleFinished() {
     try {
       const userId = await AsyncStorage.getItem('userId');
-      const response = await fetch(`http://192.168.137.1:3000/grade/user/${userId}/${quiz.id}`);
+      const response = await fetch(`https://server-side-quiz-react-native.vercel.app/grade/user/${userId}/${quiz.id}`);
 
       if (response.ok) {
         // Data exists, update it
-        await fetch(`http://192.168.137.1:3000/grade/user/${userId}/${quiz.id}`, {
+        await fetch(`https://server-side-quiz-react-native.vercel.app/grade/user/${userId}/${quiz.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -132,7 +97,7 @@ export function Quiz() {
         });
       } else {
         // Data doesn't exist, create new
-        await fetch('http://192.168.137.1:3000/grade', {
+        await fetch('https://server-side-quiz-react-native.vercel.app/grade', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -150,8 +115,7 @@ export function Quiz() {
         });
       }
 
-      console.log("pointshandlefinish:", points);
-
+      // Navigate to the finish screen
       navigate("finish", {
         points: String(points),
         total: String(quiz.questions.length),
@@ -162,6 +126,7 @@ export function Quiz() {
     }
   }
 
+
   function handleNextQuestion() {
     if (currentQuestion < quiz.questions.length - 1) {
       setCurrentQuestion((prevState) => prevState + 1);
@@ -169,6 +134,29 @@ export function Quiz() {
       handleFinished();
     }
   }
+
+  async function handleConfirm() {
+    if (alternativeSelected === null) {
+      return handleSkipConfirm();
+    }
+
+    if (quiz.questions[currentQuestion].correct === alternativeSelected) {
+      setPoints((prevState) => prevState + 1);
+
+      await playSound(true);
+
+      setStatusReply(1);
+      handleNextQuestion();
+    } else {
+      await playSound(false);
+
+      setStatusReply(2);
+      shakeAnimation();
+    }
+
+    setAlternativeSelected(null);
+  }
+
 
   function handleStop() {
     Alert.alert("Batalkan", "Apakah Anda ingin berhenti sekarang ?", [
@@ -180,6 +168,7 @@ export function Quiz() {
         text: "Iya",
         style: "destructive",
         onPress: () => {
+          // Reset the navigation stack and navigate to the dashboard
           navigation.dispatch(
             CommonActions.reset({
               index: 0,
@@ -189,8 +178,19 @@ export function Quiz() {
         },
       },
     ]);
+
     return true;
   }
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      handleStop
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
 
   async function shakeAnimation() {
     await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
@@ -199,6 +199,7 @@ export function Quiz() {
       withTiming(3, { duration: 400, easing: Easing.bounce }),
       withTiming(0, undefined, (finished) => {
         "worklet";
+
         if (finished) {
           runOnJS(handleNextQuestion)();
         }
@@ -283,14 +284,8 @@ export function Quiz() {
 
     setQuiz(quizSelected);
     setIsLoading(false);
-
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      handleStop
-    );
-
-    return () => backHandler.remove();
   }, []);
+
 
   if (isLoading) {
     return <Loading />;

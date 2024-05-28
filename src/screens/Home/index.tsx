@@ -55,12 +55,12 @@ export function Home() {
         if (userId) {
           console.log('userId:', userId);
 
-          const response = await axios.get(`http://192.168.137.1:3000/grade/user/${userId}`);
+          const response = await axios.get(`https://server-side-quiz-react-native.vercel.app/grade/user/${userId}`);
           setGrades(response.data);
           console.log('grades:', response.data);
         }
       } catch (error) {
-        console.error('Error fetching user id or grades:', error);
+        console.error('Error fetching user id or grades:', error.response.status);
       }
     };
     fetchUserIdAndGrades();
