@@ -9,6 +9,8 @@ import { History } from "../screens/History";
 import { Register } from "../screens/Register";
 import { Login } from "../screens/Login";
 import { InputOTP } from "../screens/InputOTP";
+import { Kebijakan } from "../screens/Kebijakan";
+import { Tentang } from "../screens/Tentang";
 import { InputNewPass } from "../screens/InputNewPass";
 import { Ranking } from "../screens/Ranking";
 import { SuccessPass } from "../screens/SuccessPass";
@@ -34,6 +36,8 @@ export function AppRoutes() {
       <Screen name="dashboard" component={Dashboard} />
       <Screen name="successPass" component={SuccessPass} />
       <Screen name="inputOtp" component={InputOTP} />
+      <Screen name="kebijakan" component={Kebijakan} />
+      <Screen name="tentang" component={Tentang} />
       <Screen name="inputNewPass" component={InputNewPass} />
       <Screen name="home" component={Home} />
       <Screen name="ranking" component={Ranking} />

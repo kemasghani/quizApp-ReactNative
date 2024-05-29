@@ -4,7 +4,11 @@ import { styles } from "./style";
 import Avatar from "../../assets/avatar.svg";
 import EditIcon from "../../assets/edit-icon.svg";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { useNavigation } from "@react-navigation/native";
+import {
+  useNavigation,
+  useRoute,
+  CommonActions,
+} from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Profile: React.FC = () => {
@@ -14,7 +18,22 @@ const Profile: React.FC = () => {
   const defaultEmail = "ja.nice@gmail.com";
   const defaultPassword = "****"; // Default password placeholder
 
-  const { navigate } = useNavigation();
+  const navigation = useNavigation();
+  const route = useRoute();
+
+  const handleLogout = async () => {
+    // Save keluar = true to local storage
+    await AsyncStorage.clear();
+    await AsyncStorage.setItem("loggedIn", "false");
+    // Navigate to the logout screen or perform any other logout actions
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: "login" }],
+      })
+    );
+  };
+
   return (
     <ScrollView
       contentContainerStyle={{ flexGrow: 1 }}
@@ -23,43 +42,6 @@ const Profile: React.FC = () => {
       <View style={styles.headerContainer}>
         <Text style={styles.headerText}>Profil</Text>
       </View>
-      {/* <View style={styles.container}>
-          <View style={styles.loginCard}>
-            <View style={styles.singleInput}>
-              <Text style={styles.inputLabel}>Nama</Text>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.input}
-                  defaultValue={defaultName}
-                  editable={false}
-                  placeholderTextColor="black"
-                />
-              </View>
-            </View>
-            <View style={styles.singleInput}>
-              <Text style={styles.inputLabel}>Nama Pengguna</Text>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.input}
-                  defaultValue={defaultUsername}
-                  editable={false}
-                  placeholderTextColor="black"
-                />
-              </View>
-            </View>
-            <View style={styles.singleInput}>
-              <Text style={styles.inputLabel}>Email</Text>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.input}
-                  defaultValue={defaultEmail}
-                  editable={false}
-                  placeholderTextColor="black"
-                />
-              </View>
-            </View>
-          </View>
-        </View> */}
       <View style={styles.container}>
         <View style={styles.profileContainer}>
           <Avatar style={styles.profilePicture} width={70} height={70} />
@@ -69,7 +51,7 @@ const Profile: React.FC = () => {
           </View>
           <TouchableOpacity
             style={styles.editIcon}
-            onPress={() => navigate("profiledit")}
+            onPress={() => navigation.navigate("profiledit")}
           >
             <EditIcon />
           </TouchableOpacity>
@@ -97,29 +79,19 @@ const Profile: React.FC = () => {
           <Text style={styles.subTitle}>Pengaturan Akun</Text>
           <TouchableOpacity
             style={styles.settingBtn}
-            onPress={() => navigate("login")}
+            onPress={() => navigation.navigate("tentang")}
           >
             <Text style={[styles.regularText, styles.boldText]}>Tentang</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.settingBtn}
-            onPress={() => navigate("login")}
+            onPress={() => navigation.navigate("kebijakan")}
           >
             <Text style={[styles.regularText, styles.boldText]}>
               Kebijakan Privasi
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.settingBtn}
-            onPress={async () => {
-              // Save keluar = true to local storage
-              await AsyncStorage.clear();
-              await AsyncStorage.setItem("keluar", "true");
-              // clear all async storage
-              // Navigate to the logout screen or perform any other logout actions
-              navigate("dashboard");
-            }}
-          >
+          <TouchableOpacity style={styles.settingBtn} onPress={handleLogout}>
             <Text style={[styles.regularText, styles.boldText]}>Keluar</Text>
           </TouchableOpacity>
         </View>

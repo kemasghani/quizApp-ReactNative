@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, TextInput } from "react-native";
+import { View, Text, ScrollView, Image, TextInput } from "react-native";
 import axios from "axios"; // Import Axios
 import { styles } from "./style";
 import PrimaryButton from "../../components/PrimaryButton";
@@ -77,31 +77,44 @@ export function InputOTP() {
         textContent={"Loading..."}
         textStyle={styles.spinnerText}
       />
-      <Image
-        style={{ width: 300, height: 300 }}
-        source={require("../../assets/smarta-icon.png")}
-      />
-      <View style={styles.content}>
-        <View>
-          <Text style={styles.title}>Kode Verifikasi</Text>
-        </View>
-        <View>
-          <Text style={styles.subTitle}>
-            Tolong salin kode verifikasi dari email untuk melakukan pemulihan
-            akun
-          </Text>
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={[styles.input, { textAlign: "center" }]} // Center the placeholder text
-            placeholder="Masukkan kode Anda"
-            keyboardType="numeric"
-            value={otp}
-            onChangeText={(text) => setOtp(text)}
-          />
-        </View>
+      <View style={styles.container}>
+        <ScrollView style={styles.scroll}>
+          <View style={styles.container}>
+            <Image
+              style={{ width: 250, height: 250 }}
+              source={require("../../assets/smarta-icon.png")}
+            />
+          </View>
+          <View style={styles.content}>
+            <View>
+              <Text style={styles.title}>Kode Verifikasi</Text>
+            </View>
+            <View>
+              <Text style={styles.subTitle}>
+                Tolong salin kode verifikasi dari email untuk melakukan
+                pemulihan akun
+              </Text>
+            </View>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={[styles.input, { textAlign: "center" }]} // Center the placeholder text
+                placeholder="Masukkan kode Anda"
+                keyboardType="numeric"
+                value={otp}
+                onChangeText={(text) => setOtp(text)}
+              />
+            </View>
+          </View>
+          <View
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <PrimaryButton title="Lanjutkan" onPress={handleVerifyOtp} />
+          </View>
+        </ScrollView>
       </View>
-      <PrimaryButton title="Lanjutkan" onPress={handleVerifyOtp} />
     </View>
   );
 }

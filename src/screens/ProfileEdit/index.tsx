@@ -4,6 +4,7 @@ import { Picker } from "@react-native-picker/picker"; // Updated import
 
 import { styles } from "./style";
 import PrimaryButton from "../../components/PrimaryButton";
+import DangerButton from "../../components/DangerButton";
 import { Header } from "../../components/Header";
 import Avatar from "../../assets/avatar.svg";
 import EditIcon from "../../assets/edit-icon.svg";
@@ -16,7 +17,7 @@ const ProfileEditScreen: React.FC = () => {
   const defaultAge= "18";
   const defaultUsername = "johndoe";
   const defaultEmail = "johndoe@example.com";
-  const defaultPassword = "********"; // Default password placeholder
+  const defaultPassword = "********";
 
   const { navigate } = useNavigation();
   const [selectedValue, setSelectedValue] = useState("10");
@@ -73,7 +74,13 @@ const ProfileEditScreen: React.FC = () => {
             </Picker>
           </View>
         </View>
-        <View style={{ marginTop: 20, paddingHorizontal: 100 }}>
+        <View style={{ marginTop: 20, paddingHorizontal: 100, display: "flex", flexDirection: "row", columnGap: 20, justifyContent: "center" }}>
+          <DangerButton
+            title="Batalkan"
+            onPress={() => {
+              navigate("profile");
+            }}
+          />
           <PrimaryButton
             title="Simpan"
             onPress={() => {
