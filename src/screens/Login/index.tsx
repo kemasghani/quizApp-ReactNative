@@ -18,6 +18,7 @@ import {
   AlertNotificationRoot,
 } from "react-native-alert-notification";
 import Spinner from "react-native-loading-spinner-overlay"; // Import Spinner
+import { API_URL } from '@env';
 
 export function Login() {
   const { navigate } = useNavigation();
@@ -36,7 +37,7 @@ export function Login() {
       console.log("Request Body:", requestBody);
 
       const response = await axios.post(
-        "https://server-side-quiz-react-native.vercel.app/user/login",
+        `${API_URL}/user/login`,
         requestBody, // Use the requestBody in the post request
         {
           headers: {
@@ -48,7 +49,7 @@ export function Login() {
       const userId = response.data.data.id;
       const username = response.data.data.username;
 
-      console.log(response);
+      console.log(response.data.data.username);
 
       // Store the user ID and email in AsyncStorage
       await AsyncStorage.setItem("userId", userId);

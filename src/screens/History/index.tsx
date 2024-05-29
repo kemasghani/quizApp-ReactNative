@@ -17,6 +17,8 @@ import { HistoryCard, HistoryProps } from "../../components/HistoryCard";
 import { styles } from "./styles";
 import { Loading } from "../../components/Loading";
 import { THEME } from "../../styles/theme";
+import { API_URL } from '@env';
+
 
 export function History() {
   const [isLoading, setIsLoading] = useState(true);
@@ -28,7 +30,7 @@ export function History() {
     try {
       const userId = await AsyncStorage.getItem('userId');
       if (userId) {
-        const response = await axios.get(`http://192.168.137.1:3000/grade/user/${userId}`);
+        const response = await axios.get(`${API_URL}/grade/user/${userId}`);
         setHistory(response.data);
       } else {
         Alert.alert("Error", "User ID not found in storage");
@@ -43,7 +45,7 @@ export function History() {
 
   async function remove(id: string) {
     try {
-      await axios.delete(`http://192.168.137.1:3000/grade/${id}`);
+      await axios.delete(`${API_URL}/grade/${id}`);
       fetchHistory();
     } catch (error) {
       console.error("Failed to remove history item", error);

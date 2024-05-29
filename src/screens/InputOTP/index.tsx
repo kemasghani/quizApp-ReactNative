@@ -6,6 +6,10 @@ import PrimaryButton from "../../components/PrimaryButton";
 import { useNavigation } from "@react-navigation/native";
 import Spinner from "react-native-loading-spinner-overlay"; // Import Spinner
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { API_URL } from "@env";
+import { Header } from "../../components/Header";
+import Back from "../../assets/back.svg";
+import { Dialog, ALERT_TYPE } from "react-native-alert-notification"; // Import Dialog and ALERT_TYPE
 
 export function InputOTP() {
   const { navigate } = useNavigation();
@@ -33,19 +37,32 @@ export function InputOTP() {
     try {
       setLoading(true); // Show loading spinner
 
-      const response = await axios.post(
-        "https://server-side-quiz-react-native.vercel.app/user/submit-otp",
-        {
-          email: email, // Use the fetched email
-          otp: otp,
-        }
-      );
+      if (otp.trim() === "") {
+        // Show a warning alert if OTP input is empty
+        Dialog.show({
+          type: ALERT_TYPE.WARNING,
+          title: "Warning",
+          textBody: "Masukkan kode verifikasi Anda",
+          button: "Close",
+        });
+        return;
+      }
+
+      const response = await axios.post(`${API_URL}/user/submit-otp`, {
+        email: email, // Use the fetched email
+        otp: otp,
+      });
       console.log("Response from backend:", response.data);
 
       // Proceed to the next screen if OTP verification is successful
       navigate("inputNewPass");
     } catch (error) {
-      console.error("Error verifying OTP:", error);
+      Dialog.show({
+        type: ALERT_TYPE.DANGER,
+        title: "Error",
+        textBody: "Kode OTP yang anda masukkan salah",
+        button: "Close",
+      });
       // Handle error as needed
     } finally {
       setLoading(false); // Hide loading spinner
@@ -54,6 +71,7 @@ export function InputOTP() {
 
   return (
     <View style={styles.container}>
+      <Header title="Back" subtitle={`Back`} icon1={Back} icon2={null} />
       <Spinner
         visible={loading}
         textContent={"Loading..."}

@@ -13,6 +13,7 @@ import PrimaryButton from "../../components/PrimaryButton";
 import Spinner from "react-native-loading-spinner-overlay";
 import { useNavigation } from "@react-navigation/native";
 import { Picker } from "@react-native-picker/picker";
+import { API_URL } from '@env';
 
 import {
   ALERT_TYPE,
@@ -63,7 +64,7 @@ export function Register() {
     console.log("Registering user with data:", userData);
     axios
       .post(
-        "https://server-side-quiz-react-native.vercel.app/user/register",
+        `${API_URL}/user/register`,
         userData,
         {
           headers: {

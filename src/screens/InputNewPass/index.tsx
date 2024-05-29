@@ -6,7 +6,14 @@ import PrimaryButton from "../../components/PrimaryButton";
 import { useNavigation } from "@react-navigation/native";
 import Spinner from "react-native-loading-spinner-overlay";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Dialog, AlertNotificationRoot, ALERT_TYPE } from "react-native-alert-notification";
+import {
+  Dialog,
+  AlertNotificationRoot,
+  ALERT_TYPE,
+} from "react-native-alert-notification";
+import { API_URL } from "@env";
+import { Header } from "../../components/Header";
+import Back from "../../assets/back.svg";
 
 export function InputNewPass() {
   const { navigate } = useNavigation();
@@ -45,13 +52,10 @@ export function InputNewPass() {
         return;
       }
 
-      const response = await axios.post(
-        "https://server-side-quiz-react-native.vercel.app/user/change-pass",
-        {
-          email: email,
-          newPassword: newPassword,
-        }
-      );
+      const response = await axios.post(`${API_URL}/user/change-pass`, {
+        email: email,
+        newPassword: newPassword,
+      });
       console.log("Response from backend:", response.data);
       navigate("successPass");
     } catch (error) {
@@ -65,6 +69,7 @@ export function InputNewPass() {
   return (
     <AlertNotificationRoot>
       <View style={styles.container}>
+        <Header title="Back" subtitle={`Back`} icon1={Back} icon2={null} />
         <Spinner
           visible={loading}
           textContent={"Loading..."}

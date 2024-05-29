@@ -7,6 +7,14 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#202024",
   },
+  scroll: {
+    width: "100%",
+    flex: 1,
+    margin: "auto"
+  },
+  contentContainer:{
+    margin: "auto"
+  },
   title: {
     fontSize: 24,
     width: "100%",
@@ -15,7 +23,8 @@ export const styles = StyleSheet.create({
     color: "white",
   },
   content: {
-    width: "80%",
+    paddingHorizontal: "10%",
+    width: "100%",
     display: "flex",
     flexDirection: "column",
     rowGap: 20,

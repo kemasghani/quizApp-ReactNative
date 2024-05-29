@@ -20,12 +20,17 @@ export function Header({
   icon2: Icon2,
   onPress,
 }: Props) {
-  const { navigate } = useNavigation();
+  const { navigate, goBack } = useNavigation();
   return (
     <View style={styles.container}>
       {Icon1 && (
         <View style={styles.history}>
-          <TouchableOpacity onPress={() => navigate("dashboard")}>
+          <TouchableOpacity
+            onPress={() => {
+              console.log(title); // Log the title to the console
+              title === "Back" ? navigate("login") : navigate("dashboard");
+            }}
+          >
             <Icon1 size={28} />
           </TouchableOpacity>
           <View>
@@ -38,7 +43,12 @@ export function Header({
           <View>
             <Text style={styles.title}>{title}</Text>
           </View>
-          <TouchableOpacity onPress={() => navigate("dashboard")}>
+          <TouchableOpacity
+            onPress={() => {
+              console.log(title); // Log the title to the console
+              title === "Back" ? navigate("login") : navigate("dashboard");
+            }}
+          >
             <Icon2 size={10} />
           </TouchableOpacity>
         </View>

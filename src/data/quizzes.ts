@@ -26,7 +26,7 @@ export const QUIZZES = [
     id: 4,
     title: 'Penalaran Umum',
     level: 2,
-    paket: 1,
+    paket: 4,
     svg: ToggleLeft,
   },
 
@@ -41,7 +41,7 @@ export const QUIZZES = [
     id: 6,
     title: 'Pemahaman Bacaan dan Menulis',
     level: 2,
-    paket: 1,
+    paket: 2,
     svg: GitFork,
   },
   {

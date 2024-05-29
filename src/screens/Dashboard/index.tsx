@@ -10,19 +10,29 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export function Dashboard() {
   const [quizzes, setQuizzes] = useState(allMateri);
-  const [username, setUsername] = useState(AsyncStorage.getItem("username"));
+  const [username, setUsername] = useState("");
   const navigation = useNavigation();
 
   const handleNavigate = (screenName, params) => {
     navigation.navigate(screenName, params);
   };
   useEffect(() => {
+    const getUsername = async () => {
+      try {
+        const username = await AsyncStorage.getItem("username");
+        setUsername(username);
+      } catch (error) {
+        console.error("Error retrieving username:", error);
+      }
+    };
+    getUsername();
     const checkLoggedIn = async () => {
       const loggedIn = await AsyncStorage.getItem("tokenEmail");
+      await AsyncStorage.setItem("login", "false");
       console.log(
         `==========================================${loggedIn}============================================`
       );
-      if (!loggedIn || loggedIn == null) {
+      if (loggedIn == "false" || loggedIn == null) {
         navigation.navigate("login");
       }
     };
@@ -39,6 +49,7 @@ export function Dashboard() {
         subtitle="Selamat belajar!"
         onPress={() => handleNavigate("history")}
       />
+
       <View style={styles.infoDashboard}>
         <View style={styles.nilai}>
           <Text style={styles.numberNilai}>785</Text>
@@ -62,7 +73,14 @@ export function Dashboard() {
           <MateriCard
             index={index}
             data={item}
-            onPress={() => handleNavigate("home", { id: item.id })}
+            onPress={async () => {
+              try {
+                await AsyncStorage.setItem("score", "0");
+                handleNavigate("home", { id: item.id })
+              } catch (error) {
+                console.error("Failed to set score in AsyncStorage:", error);
+              }
+            }}
           />
         )}
         numColumns={2}

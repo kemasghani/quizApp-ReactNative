@@ -1,11 +1,19 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Image, TextInput } from "react-native";
-import axios from "axios"; // Import Axios
+import { View, Text, ScrollView, Image, TextInput } from "react-native";
+import axios from "axios";
 import { styles } from "./style";
 import PrimaryButton from "../../components/PrimaryButton";
 import { useNavigation } from "@react-navigation/native";
 import Spinner from "react-native-loading-spinner-overlay"; // Import Spinner
-import AsyncStorage from "@react-native-async-storage/async-storage"; 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { API_URL } from "@env";
+import { Header } from "../../components/Header";
+import Back from "../../assets/back.svg";
+import {
+  Dialog,
+  AlertNotificationRoot,
+  ALERT_TYPE,
+} from "react-native-alert-notification";
 
 export function InputEmail() {
   const { navigate } = useNavigation();
@@ -14,11 +22,18 @@ export function InputEmail() {
 
   const handleFetchData = async () => {
     try {
+      if (email.trim() === "") {
+        Dialog.show({
+          type: ALERT_TYPE.WARNING,
+          title: "Warning",
+          textBody: "Alamat email tidak boleh kosong",
+          button: "Close",
+        });
+        return;
+      }
+
       setLoading(true); // Show loading spinner
-      const response = await axios.post(
-        "https://server-side-quiz-react-native.vercel.app/user/otp",
-        { email }
-      );
+      const response = await axios.post(`${API_URL}/user/otp`, { email });
       console.log("Response from backend:", response.data);
       // Set email in AsyncStorage
       await AsyncStorage.setItem("email", email);
@@ -33,35 +48,59 @@ export function InputEmail() {
   };
 
   return (
-    <View style={styles.container}>
-      <Spinner
-        visible={loading}
-        textContent={"Loading..."}
-        textStyle={styles.spinnerText}
-      />
-      <Image
-        style={{ width: 300, height: 300 }}
-        source={require("../../assets/smarta-icon.png")}
-      />
-      <View style={styles.content}>
-        <View>
-          <Text style={styles.title}>Lupa Kata Sandi</Text>
-        </View>
-        <View>
-          <Text style={styles.subTitle}>
-            Masukkan alamat email kamu untuk membuat kata sandi baru
-          </Text>
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Masukkan alamat email"
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-          />
-        </View>
+    <AlertNotificationRoot>
+      <View style={styles.container}>
+        <Spinner
+          visible={loading}
+          textContent={"Loading..."}
+          textStyle={styles.spinnerText}
+        />
+        <Header title="Back" subtitle={`Back`} icon1={Back} icon2={null} />
+        <ScrollView style={styles.scroll}>
+          <View style={styles.contentContainer}>
+            <View
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Image
+                style={{
+                  width: 250,
+                  height: 250,
+                }}
+                source={require("../../assets/smarta-icon.png")}
+              />
+            </View>
+            <View style={styles.content}>
+              <View>
+                <Text style={styles.title}>Lupa Kata Sandi</Text>
+              </View>
+              <View>
+                <Text style={styles.subTitle}>
+                  Masukkan alamat email kamu untuk membuat kata sandi baru
+                </Text>
+              </View>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Masukkan alamat email"
+                  value={email}
+                  onChangeText={(text) => setEmail(text)}
+                />
+              </View>
+            </View>
+            <View
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <PrimaryButton title="Lanjutkan" onPress={handleFetchData} />
+            </View>
+          </View>
+        </ScrollView>
       </View>
-      <PrimaryButton title="Lanjutkan" onPress={handleFetchData} />
-    </View>
+    </AlertNotificationRoot>
   );
 }

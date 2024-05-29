@@ -31,7 +31,8 @@ import { OutlineButton } from "../../components/OutlineButton";
 import { ProgressBar } from "../../components/ProgressBar";
 import { OverlayFeedback } from "../../components/OverlayFeedback";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { CommonActions } from '@react-navigation/native';
+import { CommonActions } from "@react-navigation/native";
+import { API_URL } from "@env";
 
 type QuizProps = (typeof QUIZ)[0];
 
@@ -55,7 +56,6 @@ export function Quiz() {
   const { navigate } = useNavigation();
   const navigation = useNavigation();
 
-
   const route = useRoute();
   const { id } = route.params as Params;
 
@@ -71,36 +71,28 @@ export function Quiz() {
   }
 
   function handleSkipConfirm() {
-    Alert.alert("Dilewati", "Apakah Anda benar-benar ingin melewati pertanyaan ini ?", [
-      { text: "Iya", onPress: () => handleNextQuestion() },
-      { text: "Tidak", onPress: () => { } },
-    ]);
+    Alert.alert(
+      "Dilewati",
+      "Apakah Anda benar-benar ingin melewati pertanyaan ini ?",
+      [
+        { text: "Iya", onPress: () => handleNextQuestion() },
+        { text: "Tidak", onPress: () => {} },
+      ]
+    );
   }
 
   async function handleFinished() {
     try {
-      const userId = await AsyncStorage.getItem('userId');
-      const response = await fetch(`https://server-side-quiz-react-native.vercel.app/grade/user/${userId}/${quiz.id}`);
+      const userId = await AsyncStorage.getItem("userId");
+      const response = await fetch(
+        `${API_URL}/grade/user/${userId}/${quiz.id}`
+      );
 
-      if (response.ok) {
-        // Data exists, update it
-        await fetch(`https://server-side-quiz-react-native.vercel.app/grade/user/${userId}/${quiz.id}`, {
-          method: 'PUT',
+      if (!response.ok) {
+        await fetch(`${API_URL}/grade`, {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            points,
-            correctAnswer: points,
-            completedAt: new Date().toISOString(),
-          }),
-        });
-      } else {
-        // Data doesn't exist, create new
-        await fetch('https://server-side-quiz-react-native.vercel.app/grade', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             userId: userId,
@@ -114,18 +106,19 @@ export function Quiz() {
           }),
         });
       }
-
-      // Navigate to the finish screen
       navigate("finish", {
         points: String(points),
         total: String(quiz.questions.length),
+        quizId: quiz.id
       });
     } catch (error) {
-      console.error('Error saving quiz progress:', error);
-      Alert.alert("Error", "Failed to save quiz progress. Please try again later.");
+      console.error("Error saving quiz progress:", error);
+      Alert.alert(
+        "Error",
+        "Failed to save quiz progress. Please try again later."
+      );
     }
   }
-
 
   function handleNextQuestion() {
     if (currentQuestion < quiz.questions.length - 1) {
@@ -157,7 +150,6 @@ export function Quiz() {
     setAlternativeSelected(null);
   }
 
-
   function handleStop() {
     Alert.alert("Batalkan", "Apakah Anda ingin berhenti sekarang ?", [
       {
@@ -172,7 +164,7 @@ export function Quiz() {
           navigation.dispatch(
             CommonActions.reset({
               index: 0,
-              routes: [{ name: 'dashboard' }],
+              routes: [{ name: "dashboard" }],
             })
           );
         },
@@ -190,7 +182,6 @@ export function Quiz() {
 
     return () => backHandler.remove();
   }, []);
-
 
   async function shakeAnimation() {
     await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
@@ -285,7 +276,6 @@ export function Quiz() {
     setQuiz(quizSelected);
     setIsLoading(false);
   }, []);
-
 
   if (isLoading) {
     return <Loading />;

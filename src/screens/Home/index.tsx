@@ -12,6 +12,7 @@ import { styles } from './styles';
 import { QUIZZES } from '../../data/quizzes';
 import { allMateri } from "../../data/materi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { API_URL } from '@env';
 
 export function Home() {
   const [quizzes, setQuizzes] = useState(QUIZZES);
@@ -55,7 +56,7 @@ export function Home() {
         if (userId) {
           console.log('userId:', userId);
 
-          const response = await axios.get(`https://server-side-quiz-react-native.vercel.app/grade/user/${userId}`);
+          const response = await axios.get(`${API_URL}/grade/user/${userId}`);
           setGrades(response.data);
           console.log('grades:', response.data);
         }
@@ -103,7 +104,7 @@ export function Home() {
         renderItem={({ item, index }) => (
           <QuizCard
             index={index}
-            data={item}
+            data={item} 
             attempted={checkAttempted(item.id)}
             grades={grades} // Pass the grades data as a prop
             onPress={() => navigate('quiz', { id: item.id })}
