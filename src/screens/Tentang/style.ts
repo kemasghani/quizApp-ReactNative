@@ -7,10 +7,11 @@ export const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     backgroundColor: "#202024",
+    paddingHorizontal: "2%"
   },
   scroll: {
     width: "100%",
-    margin: "auto",
+    marginTop: 20,
   },
   title: {
     fontSize: 24,
@@ -27,36 +28,10 @@ export const styles = StyleSheet.create({
     marginBottom: 70,
   },
   subTitle: {
-    fontSize: 14,
-    textAlign: "left",
-    fontWeight: "300",
+    marginTop: 20,
+    fontSize: 17,
+    textAlign: "center",
+    fontWeight: "400",
     color: "white",
-  },
-
-  inputContainer: {
-    width: "100%",
-    height: 70,
-    borderRadius: 10,
-    backgroundColor: "#E1E1E6",
-    marginBottom: 16,
-    paddingLeft: 12,
-    marginTop: 33,
-  },
-  input: {
-    flex: 1,
-    height: "100%",
-    paddingRight: 30,
-    display: "flex",
-    fontSize: 20,
-  },
-  spinnerText: {
-    color: "white",
-  },
-  textLink: {
-    color: "#FBA94C",
-    fontSize: 12,
-    fontStyle: "normal",
-    fontWeight: "500",
-    letterSpacing: 0.48,
   },
 });

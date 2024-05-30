@@ -12,6 +12,8 @@ import { Quiz } from "../screens/Quiz";
 import Notifikasi from "../screens/Notifikasi";
 import { InputEmail } from "../screens/InputEmail";
 import { InputOTP } from "../screens/InputOTP";
+import { Kebijakan } from "../screens/Kebijakan";
+import { Tentang } from "../screens/Tentang";
 import { InputNewPass } from "../screens/InputNewPass";
 import Profile from "../screens/Profile";
 import { SuccessPass } from "../screens/SuccessPass";
@@ -197,6 +199,36 @@ export default function Navigation() {
         <Tab.Screen
           name="inputOtp"
           component={InputOTP}
+          options={{
+            headerShown: false,
+            tabBarLabel: "Register",
+            tabBarIcon: ({ focused, color, size }) => (
+              <Ionicons
+                name={focused ? "person" : "person-outline"}
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="kebijakan"
+          component={Kebijakan}
+          options={{
+            headerShown: false,
+            tabBarLabel: "Register",
+            tabBarIcon: ({ focused, color, size }) => (
+              <Ionicons
+                name={focused ? "person" : "person-outline"}
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="tentang"
+          component={Tentang}
           options={{
             headerShown: false,
             tabBarLabel: "Register",

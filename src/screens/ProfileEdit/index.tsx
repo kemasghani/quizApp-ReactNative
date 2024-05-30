@@ -8,6 +8,8 @@ import * as ImagePicker from 'expo-image-picker';
 
 import { styles } from "./style";
 import PrimaryButton from "../../components/PrimaryButton";
+import DangerButton from "../../components/DangerButton";
+import { Header } from "../../components/Header";
 import Avatar from "../../assets/avatar.svg";
 import { LOCALHOST_URL } from "@env";
 

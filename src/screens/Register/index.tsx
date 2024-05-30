@@ -13,8 +13,9 @@ import PrimaryButton from "../../components/PrimaryButton";
 import Spinner from "react-native-loading-spinner-overlay";
 import { useNavigation } from "@react-navigation/native";
 import { Picker } from "@react-native-picker/picker";
-import { API_URL } from '@env';
-
+import { API_URL } from "@env";
+import { Header } from "../../components/Header";
+import Back from "../../assets/back.svg";
 import {
   ALERT_TYPE,
   Dialog,
@@ -63,15 +64,11 @@ export function Register() {
     };
     console.log("Registering user with data:", userData);
     axios
-      .post(
-        `${API_URL}/user/register`,
-        userData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      .post(`${API_URL}/user/register`, userData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
       .then((response) => {
         setLoading(false);
         Dialog.show({
@@ -96,6 +93,7 @@ export function Register() {
 
   return (
     <AlertNotificationRoot>
+      <Header title="Back" subtitle={`Back`} icon1={Back} icon2={null} />
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.container}>
           <Image
@@ -170,7 +168,11 @@ export function Register() {
               textContent={"Loading..."}
               textStyle={styles.spinnerText}
             />
-            <PrimaryButton title="Daftar" onPress={handleRegister} />
+            <View style={{
+              marginTop: 20
+            }}>
+              <PrimaryButton title="Daftar" onPress={handleRegister} />
+            </View>
 
             <View style={styles.footer}>
               <Text style={styles.footerText}>Sudah Memiliki Akun? </Text>

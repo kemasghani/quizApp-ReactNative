@@ -4,10 +4,14 @@ import { styles } from "./style";
 import Avatar from "../../assets/avatar.svg";
 import EditIcon from "../../assets/edit-icon.svg";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { API_URL, LOCALHOST_URL } from "@env";
+import {
+  useNavigation,
+  useRoute,
+  CommonActions,
+} from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Profile: React.FC = () => {
   const [userData, setUserData] = useState(null);
@@ -40,6 +44,21 @@ const Profile: React.FC = () => {
 
 
 
+  const navigation = useNavigation();
+  const route = useRoute();
+
+  const handleLogout = async () => {
+    // Save keluar = true to local storage
+    await AsyncStorage.clear();
+    await AsyncStorage.setItem("loggedIn", "false");
+    // Navigate to the logout screen or perform any other logout actions
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: "login" }],
+      })
+    );
+  };
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={styles.scrollViewContent}>
@@ -65,7 +84,10 @@ const Profile: React.FC = () => {
             <Text style={styles.nameText}>{loading ? "loading..." : userData?.username}</Text>
             <Text style={styles.emailText}>{loading ? "loading..." : userData?.email}</Text>
           </View>
-          <TouchableOpacity style={styles.editIcon} onPress={() => navigate('profiledit')}>
+          <TouchableOpacity
+            style={styles.editIcon}
+            onPress={() => navigation.navigate("profiledit")}
+          >
             <EditIcon />
           </TouchableOpacity>
         </View>
@@ -88,17 +110,21 @@ const Profile: React.FC = () => {
         </View>
         <View style={{ marginTop: 30 }}>
           <Text style={styles.subTitle}>Pengaturan Akun</Text>
-          <TouchableOpacity style={styles.settingBtn} onPress={() => navigate('login')}>
+          <TouchableOpacity
+            style={styles.settingBtn}
+            onPress={() => navigation.navigate("tentang")}
+          >
             <Text style={[styles.regularText, styles.boldText]}>Tentang</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.settingBtn} onPress={() => navigate('login')}>
-            <Text style={[styles.regularText, styles.boldText]}>Kebijakan Privasi</Text>
+          <TouchableOpacity
+            style={styles.settingBtn}
+            onPress={() => navigation.navigate("kebijakan")}
+          >
+            <Text style={[styles.regularText, styles.boldText]}>
+              Kebijakan Privasi
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.settingBtn} onPress={async () => {
-            await AsyncStorage.clear();
-            await AsyncStorage.setItem('keluar', 'true');
-            navigate('dashboard');
-          }}>
+          <TouchableOpacity style={styles.settingBtn} onPress={handleLogout}>
             <Text style={[styles.regularText, styles.boldText]}>Keluar</Text>
           </TouchableOpacity>
         </View>

@@ -9,15 +9,21 @@ export const styles = StyleSheet.create({
     backgroundColor: "#202024",
   },
   scroll: {
-    width: "100%",
-    margin: "auto",
+    paddingHorizontal: "3%",
+    width: "96%",
+    marginTop: 20
   },
   title: {
-    fontSize: 24,
+    fontSize: 30,
     width: "100%",
     textAlign: "left",
     fontWeight: "bold",
     color: "white",
+  },
+  contentPoint: {
+    display: "flex",
+    flexDirection: "column",
+    rowGap: 40,
   },
   content: {
     width: "100%",
@@ -26,37 +32,29 @@ export const styles = StyleSheet.create({
     rowGap: 20,
     marginBottom: 70,
   },
-  subTitle: {
-    fontSize: 14,
+  subTittle: {
+    fontSize: 23,
+    color: "white",
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  textContent: {
+    fontSize: 15,
     textAlign: "left",
-    fontWeight: "300",
+    fontWeight: "400",
     color: "white",
   },
-
-  inputContainer: {
-    width: "100%",
-    height: 70,
-    borderRadius: 10,
-    backgroundColor: "#E1E1E6",
-    marginBottom: 16,
-    paddingLeft: 12,
-    marginTop: 33,
+  listItem: {
+    flexDirection: "row",
+    paddingVertical: 3,
+    paddingLeft: 15,
   },
-  input: {
-    flex: 1,
-    height: "100%",
-    paddingRight: 30,
-    display: "flex",
-    fontSize: 20,
-  },
-  spinnerText: {
+  bullet: {
+    fontSize: 18,
+    marginRight: 8,
     color: "white",
   },
-  textLink: {
-    color: "#FBA94C",
-    fontSize: 12,
-    fontStyle: "normal",
-    fontWeight: "500",
-    letterSpacing: 0.48,
+  itemText: {
+    fontSize: 16,
   },
 });
