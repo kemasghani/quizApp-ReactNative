@@ -11,7 +11,7 @@ import PrimaryButton from "../../components/PrimaryButton";
 import DangerButton from "../../components/DangerButton";
 import { Header } from "../../components/Header";
 import Avatar from "../../assets/avatar.svg";
-import { LOCALHOST_URL } from "@env";
+import { API_URL, LOCALHOST_URL } from "@env";
 
 const ProfileEditScreen: React.FC = () => {
   const { navigate } = useNavigation();
@@ -199,7 +199,7 @@ const ProfileEditScreen: React.FC = () => {
                 <Text style={styles.previewText}>(image preview)</Text>
               </>
             ) : avatar ? (
-              <Image source={{ uri: `${LOCALHOST_URL}/uploads/${avatar}` }} style={styles.profilePicture} />
+              <Image source={{ uri: `${avatar}` }} style={styles.profilePicture} />
             ) : (
               <Avatar style={styles.profilePicture} width={70} height={70} />
             )}
