@@ -39,6 +39,8 @@ export const styles = StyleSheet.create({
   profilePicture: {
     borderRadius: 50,
     backgroundColor: THEME.COLORS.GREY_700,
+    height: 70,
+    width: 70,
   },
   profileInfo: {
     justifyContent: "center",
@@ -67,7 +69,11 @@ export const styles = StyleSheet.create({
     fontStyle: "normal",
     fontWeight: "400",
   },
-
+  previewText: {
+    color: "white",
+    opacity: 0.7,
+    marginTop: 10
+  },
   loginCard: {
     marginTop: 0,
     height: "auto",
