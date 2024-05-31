@@ -9,9 +9,8 @@ import * as ImagePicker from 'expo-image-picker';
 import { styles } from "./style";
 import PrimaryButton from "../../components/PrimaryButton";
 import DangerButton from "../../components/DangerButton";
-import { Header } from "../../components/Header";
 import Avatar from "../../assets/avatar.svg";
-import { LOCALHOST_URL } from "@env";
+import { API_URL } from "@env";
 
 const ProfileEditScreen: React.FC = () => {
   const { navigate } = useNavigation();
@@ -36,7 +35,7 @@ const ProfileEditScreen: React.FC = () => {
           return;
         }
 
-        const response = await axios.get(`${LOCALHOST_URL}/user/${userId}`);
+        const response = await axios.get(`${API_URL}/user/${userId}`);
         const userData = response.data[0];
 
         setName(userData.username);
@@ -122,7 +121,7 @@ const ProfileEditScreen: React.FC = () => {
 
     try {
       console.log(`Uploading avatar for userId: ${userId} with filename: ${filename}`);
-      const response = await axios.post(`${LOCALHOST_URL}/user/${userId}/upload-avatar`, formData, {
+      const response = await axios.post(`${API_URL}/user/${userId}/upload-avatar`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -166,7 +165,7 @@ const ProfileEditScreen: React.FC = () => {
         await uploadAvatar(previewAvatar);
       }
 
-      const response = await axios.put(`${LOCALHOST_URL}/user/${userId}`, {
+      const response = await axios.put(`${API_URL}/user/${userId}`, {
         username: name,
         email,
         umur: parseInt(age, 10),
@@ -199,7 +198,7 @@ const ProfileEditScreen: React.FC = () => {
                 <Text style={styles.previewText}>(image preview)</Text>
               </>
             ) : avatar ? (
-              <Image source={{ uri: `${LOCALHOST_URL}/uploads/${avatar}` }} style={styles.profilePicture} />
+              <Image source={{ uri: `${API_URL}/uploads/${avatar}` }} style={styles.profilePicture} />
             ) : (
               <Avatar style={styles.profilePicture} width={70} height={70} />
             )}
@@ -258,7 +257,8 @@ const ProfileEditScreen: React.FC = () => {
                 </Picker>
               </View>
             </View>
-            <View style={{ marginTop: 20, paddingHorizontal: 100 }}>
+            <View style={{ marginTop: 20, paddingHorizontal: 100, display: "flex", flexDirection: "row", justifyContent: "center", columnGap: 20 }}>
+              <DangerButton title="Batalkan" onPress={saveUserData} />
               <PrimaryButton title="Simpan" onPress={saveUserData} />
             </View>
           </View>

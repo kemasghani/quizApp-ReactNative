@@ -159,7 +159,7 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   textContainer: {
-    flex: 1,
-    gap: 10,
+    display: "flex",
+    borderWidth: 1
   },
 });

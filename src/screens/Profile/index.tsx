@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, ActivityIndicator, Image } from "react-native";
+import { View, Text, ScrollView, Image } from "react-native";
 import { styles } from "./style";
 import Avatar from "../../assets/avatar.svg";
 import EditIcon from "../../assets/edit-icon.svg";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import axios from 'axios';
-import { API_URL, LOCALHOST_URL } from "@env";
+import { API_URL } from "@env";
 import {
   useNavigation,
   useRoute,
@@ -26,7 +26,7 @@ const Profile: React.FC = () => {
         console.log('userId:', userId);
 
 
-        const response = await axios.get(`${LOCALHOST_URL}/user/${userId}`);
+        const response = await axios.get(`${API_URL}/user/${userId}`);
         console.log('userData:', response.data);
         // setUserData(response.data);
         setUserData(response.data[0]);
@@ -71,7 +71,7 @@ const Profile: React.FC = () => {
           {/* {userData?.avatar && <Image source={{ uri: userData?.avatar }} style={{ width: 100, height: 100, borderRadius: 50 }} />} */}
           {userData?.avatar ? (
             <Image
-              source={{ uri: `${LOCALHOST_URL}/uploads/${userData?.avatar}` }}
+              source={{ uri: `${API_URL}/uploads/${userData?.avatar}` }}
               style={{ width: 70, height: 70, borderRadius: 50 }}
             />
           ) : (
