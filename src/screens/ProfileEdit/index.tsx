@@ -201,7 +201,10 @@ const ProfileEditScreen: React.FC = () => {
             ) : avatar ? (
               <Image source={{ uri: `${avatar}` }} style={styles.profilePicture} />
             ) : (
-              <Avatar style={styles.profilePicture} width={70} height={70} />
+              <Image
+                source={require('../../assets/user.png')}
+                style={styles.profilePicture}
+              />
             )}
             <TouchableOpacity onPress={handleChooseAvatar}>
               <Text style={styles.headerText}>Ganti Avatar</Text>

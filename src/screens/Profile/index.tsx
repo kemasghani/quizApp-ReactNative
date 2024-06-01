@@ -75,8 +75,10 @@ const Profile: React.FC = () => {
               style={{ width: 70, height: 70, borderRadius: 50 }}
             />
           ) : (
-            <Avatar style={styles.profilePicture} width={70} height={70} />
-
+            <Image
+              source={require('../../assets/user.png')}
+              style={styles.profilePicture}
+            />
           )}
 
 

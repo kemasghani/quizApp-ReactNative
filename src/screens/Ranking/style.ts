@@ -5,7 +5,11 @@ export const styles = StyleSheet.create({
   scrollViewContent: {
     backgroundColor: "#202024",
   },
-
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   container: {
     backgroundColor: "#202024",
     flex: 1

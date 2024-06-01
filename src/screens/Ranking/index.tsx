@@ -1,58 +1,39 @@
-// Ranking.js
-
-import React from "react";
-import { ScrollView, Image, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ScrollView, Image, View, ActivityIndicator } from "react-native";
 import { styles } from "./style";
 import { Header } from "../../components/Header";
 import Close from "../../assets/close.svg";
 import { RankingList } from "../../components/RankingList";
-
-const data = [
-  {
-    id: 1,
-    imageUri: 'https://via.placeholder.com/150',
-    user: 'Lorem Ipsum',
-    nilai: '2078',
-  },
-  {
-    id: 2,
-    imageUri: 'https://via.placeholder.com/150',
-    user: 'Emma',
-    nilai: '2039',
-  },
-  {
-    id: 3,
-    imageUri: 'https://via.placeholder.com/150',
-    user: 'Sam',
-    nilai: '2003',
-  },
-  {
-    id: 4,
-    imageUri: 'https://via.placeholder.com/150',
-    user: 'Sam',
-    nilai: '2003',
-  },
-  {
-    id: 5,
-    imageUri: 'https://via.placeholder.com/150',
-    user: 'Sam',
-    nilai: '2003',
-  },
-  {
-    id: 6,
-    imageUri: 'https://via.placeholder.com/150',
-    user: 'Sam',
-    nilai: '2003',
-  },
-  {
-    id: 7,
-    imageUri: 'https://via.placeholder.com/150',
-    user: 'Sam',
-    nilai: '2003',
-  },
-];
+import axios from 'axios';
+import { LOCALHOST_URL } from "@env";
 
 function Ranking() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${LOCALHOST_URL}/total-points`);
+        setData(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <Header title="Peringkat" icon1={Close} />

@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Image, Text, FlatList } from 'react-native';
 import { styles } from './style';
+import Avatar from "../../assets/avatar.svg";
+
 
 const RankingList = ({ data }) => {
   const getRankImage = (index) => {
@@ -17,7 +19,7 @@ const RankingList = ({ data }) => {
   };
 
   const renderItem = ({ item, index }) => (
-    <View key={item.id}>
+    <View key={item.userId}>
       <View style={styles.rankingContainer}>
         <Image
           source={getRankImage(index)} // Use the getRankImage function to get the appropriate image source
@@ -26,13 +28,19 @@ const RankingList = ({ data }) => {
         <Text style={styles.rank}>{`Rank ${index + 1}`}</Text>
       </View>
       <View style={styles.row}>
-        <Image
-          source={{ uri: item.imageUri }}
-          style={styles.image}
-        />
+        {item.avatar ?
+          <Image
+            source={{ uri: `${item?.avatar}` }} // Placeholder image URI
+            style={styles.image}
+          /> :
+          <Image
+            source={require('../../assets/user.png')}
+            style={styles.image}
+          />
+        }
         <View style={styles.textContainer}>
-          <Text style={styles.user}>{item.user}</Text>
-          <Text style={styles.nilai}>Total Nilai : {item.nilai}</Text>
+          <Text style={styles.user}>{item.username}</Text>
+          <Text style={styles.nilai}>Total Nilai : {item.totalPoints}</Text>
         </View>
       </View>
     </View>
@@ -42,7 +50,7 @@ const RankingList = ({ data }) => {
     <FlatList
       data={data}
       renderItem={renderItem}
-      keyExtractor={(item) => item.id.toString()}
+      keyExtractor={(item) => item.userId.toString()}
     />
   );
 };
