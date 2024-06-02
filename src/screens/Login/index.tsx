@@ -18,10 +18,11 @@ import {
   AlertNotificationRoot,
 } from "react-native-alert-notification";
 import Spinner from "react-native-loading-spinner-overlay"; // Import Spinner
-import { API_URL } from '@env';
+import { API_URL } from "@env";
 
 export function Login() {
   const { navigate } = useNavigation();
+  const [userData, setUserData] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -38,24 +39,36 @@ export function Login() {
 
       const response = await axios.post(
         `${API_URL}/user/login`,
-        requestBody, // Use the requestBody in the post request
+        requestBody,
         {
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
-      // Extract the user ID from the response
+
       const userId = response.data.data.id;
       const username = response.data.data.username;
+      const getdata = await axios.get(`${API_URL}/user/${userId}`);
+      console.log("userData:", getdata.data[0].umur);
+      setUserData(getdata.data[0]);
 
-      console.log(response.data.data.username);
+      // Helper function to store non-null/undefined values in AsyncStorage
+      const safeSetItem = async (key, value) => {
+        if (value !== null && value !== undefined) {
+          await AsyncStorage.setItem(key, value.toString());
+        }
+      };
 
-      // Store the user ID and email in AsyncStorage
-      await AsyncStorage.setItem("userId", userId);
-      await AsyncStorage.setItem("tokenEmail", email);
-      await AsyncStorage.setItem("username", username);
-      await AsyncStorage.setItem("loggedIn", "true");
+      // Store the user data in AsyncStorage
+      await safeSetItem("userId", userId);
+      await safeSetItem("tokenEmail", email);
+      await safeSetItem("username", username);
+      await safeSetItem("umur", userData.umur);
+      await safeSetItem("domisili", userData.domisili);
+      await safeSetItem("avatar", userData.avatar);
+      await safeSetItem("loggedIn", "true");
+
       navigate("dashboard");
     } catch (error) {
       setLoading(false);
@@ -66,8 +79,10 @@ export function Login() {
         textBody: "Email atau password salah !",
         button: "OK",
       });
+      console.log("modal");
     }
   };
+
 
   return (
     <AlertNotificationRoot>

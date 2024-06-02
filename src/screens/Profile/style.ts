@@ -160,6 +160,7 @@ export const styles = StyleSheet.create({
   },
   textContainer: {
     display: "flex",
-    borderWidth: 1
+    flexDirection: "column",
+    rowGap: 14
   },
 });

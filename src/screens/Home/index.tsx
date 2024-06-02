@@ -20,6 +20,8 @@ export function Home() {
   const [grades, setGrades] = useState([]);
   const route = useRoute();
   const { id } = route.params;
+  console.log("id:", id);
+
   const [selectedMateri, setSelectedMateri] = useState(() => allMateri.find(materi => materi.id === id));
 
   const { navigate } = useNavigation();
@@ -104,7 +106,7 @@ export function Home() {
         renderItem={({ item, index }) => (
           <QuizCard
             index={index}
-            data={item} 
+            data={item}
             attempted={checkAttempted(item.id)}
             grades={grades} // Pass the grades data as a prop
             onPress={() => navigate('quiz', { id: item.id })}

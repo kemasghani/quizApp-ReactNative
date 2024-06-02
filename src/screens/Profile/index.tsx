@@ -4,7 +4,7 @@ import { styles } from "./style";
 import Avatar from "../../assets/avatar.svg";
 import EditIcon from "../../assets/edit-icon.svg";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import axios from 'axios';
+import axios from "axios";
 import { API_URL } from "@env";
 import {
   useNavigation,
@@ -16,24 +16,31 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const Profile: React.FC = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [avatar, setAvatar] = useState(null);
+  const [domisili, setDomisili] = useState(null);
+  const [umur, setUmur] = useState(null);
+  const [username, setUsername] = useState(null);
+  const [email, setEmail] = useState(null);
 
-  const { navigate } = useNavigation();
-
+  const {navigate} = useNavigation();
+  const navigation = useNavigation();
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userId = await AsyncStorage.getItem('userId');
-        console.log('userId:', userId);
-
-
-        const response = await axios.get(`${API_URL}/user/${userId}`);
-        console.log('userData:', response.data);
-        // setUserData(response.data);
-        setUserData(response.data[0]);
-
+        const avatar = await AsyncStorage.getItem("avatar");
+        const domisili = await AsyncStorage.getItem("domisili");
+        const umur = await AsyncStorage.getItem("umur");
+        const email = await AsyncStorage.getItem("tokenEmail");
+        const username = await AsyncStorage.getItem("username");
+        console.log(`============${username}============`);
+        setAvatar(avatar);
+        setDomisili(domisili);
+        setUmur(umur);
+        setUsername(username);
+        setEmail(email);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error("Error fetching user data:", error);
         setLoading(false);
       }
     };
@@ -41,17 +48,13 @@ const Profile: React.FC = () => {
     fetchUserData();
   }, []);
 
-
-
-
-  const navigation = useNavigation();
-  const route = useRoute();
+  const truncateUsername = (username) => {
+    return username.length > 10 ? username.substring(0, 10) + "..." : username;
+  };
 
   const handleLogout = async () => {
-    // Save keluar = true to local storage
     await AsyncStorage.clear();
     await AsyncStorage.setItem("loggedIn", "false");
-    // Navigate to the logout screen or perform any other logout actions
     navigation.dispatch(
       CommonActions.reset({
         index: 0,
@@ -61,32 +64,35 @@ const Profile: React.FC = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={styles.scrollViewContent}>
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 1 }}
+      style={styles.scrollViewContent}
+    >
       <View style={styles.headerContainer}>
         <Text style={styles.headerText}>Profil Saya</Text>
       </View>
       <View style={styles.container}>
-
         <View style={styles.profileContainer}>
-          {/* {userData?.avatar && <Image source={{ uri: userData?.avatar }} style={{ width: 100, height: 100, borderRadius: 50 }} />} */}
-          {userData?.avatar ? (
+          {avatar ? (
             <Image
-              source={{ uri: `${API_URL}/uploads/${userData?.avatar}` }}
+              source={{ uri: avatar }}
               style={{ width: 70, height: 70, borderRadius: 50 }}
             />
           ) : (
             <Avatar style={styles.profilePicture} width={70} height={70} />
-
           )}
 
-
           <View style={styles.profileInfo}>
-            <Text style={styles.nameText}>{loading ? "loading..." : userData?.username}</Text>
-            <Text style={styles.emailText}>{loading ? "loading..." : userData?.email}</Text>
+            <Text style={styles.nameText}>
+              {loading ? "loading..." : truncateUsername(username)}
+            </Text>
+            <Text style={styles.emailText}>
+              {loading ? "loading..." : email}
+            </Text>
           </View>
           <TouchableOpacity
             style={styles.editIcon}
-            onPress={() => navigation.navigate("profiledit")}
+            onPress={() => navigate("profiledit")}
           >
             <EditIcon />
           </TouchableOpacity>
@@ -101,10 +107,18 @@ const Profile: React.FC = () => {
               <Text style={styles.regularText}>Umur</Text>
             </View>
             <View style={[styles.textContainer, styles.rightAlignedText]}>
-              <Text style={[styles.regularText, styles.boldText]}>{loading ? "loading..." : userData.username}</Text>
-              <Text style={[styles.regularText, styles.boldText]}>{loading ? "loading..." : userData.email}</Text>
-              <Text style={[styles.regularText, styles.boldText]}>{loading ? "loading..." : userData.domisili}</Text>
-              <Text style={[styles.regularText, styles.boldText]}>{loading ? "loading..." : userData.umur}</Text>
+              <Text style={[styles.regularText]}>
+                {loading ? "loading..." : truncateUsername(username)}
+              </Text>
+              <Text style={[styles.regularText]}>
+                {loading ? "loading..." : email}
+              </Text>
+              <Text style={[styles.regularText]}>
+                {loading ? "loading..." : domisili}
+              </Text>
+              <Text style={[styles.regularText]}>
+                {loading ? "loading..." : umur}
+              </Text>
             </View>
           </View>
         </View>
@@ -112,13 +126,13 @@ const Profile: React.FC = () => {
           <Text style={styles.subTitle}>Pengaturan Akun</Text>
           <TouchableOpacity
             style={styles.settingBtn}
-            onPress={() => navigation.navigate("tentang")}
+            onPress={() => navigate("tentang")}
           >
             <Text style={[styles.regularText, styles.boldText]}>Tentang</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.settingBtn}
-            onPress={() => navigation.navigate("kebijakan")}
+            onPress={() => navigate("kebijakan")}
           >
             <Text style={[styles.regularText, styles.boldText]}>
               Kebijakan Privasi

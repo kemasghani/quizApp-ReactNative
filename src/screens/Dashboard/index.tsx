@@ -22,6 +22,10 @@ export function Dashboard() {
     const getUsername = async () => {
       try {
         const username = await AsyncStorage.getItem("username");
+        const domisili = await AsyncStorage.getItem("domisili");
+        const umur = await AsyncStorage.getItem("umur");
+        console.log(domisili);
+        console.log(umur);
         setUsername(username);
         setLoading(false); // Set loading to false after username is retrieved
       } catch (error) {
