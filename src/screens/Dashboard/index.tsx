@@ -51,7 +51,7 @@ export function Dashboard() {
         <Header
           icon1="https://res.cloudinary.com/dsezjy9ur/image/upload/v1717399791/avatars/rq8qnzgllbezas5ak6wr.jpg"
           icon2={null}
-          title={`Selamat Belajar, loading ... !`}
+          title={`Selamat Belajar, loading ...`}
           subtitle="dashboard"
           onPress={() => handleNavigate("history")}
         />
