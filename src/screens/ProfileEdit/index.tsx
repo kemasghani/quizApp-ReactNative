@@ -16,7 +16,11 @@ import { useNavigation, CommonActions } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
 import * as ImageManipulator from "expo-image-manipulator";
-
+import {
+  ALERT_TYPE,
+  Dialog,
+  AlertNotificationRoot,
+} from "react-native-alert-notification";
 import { styles } from "./style";
 import PrimaryButton from "../../components/PrimaryButton";
 import DangerButton from "../../components/DangerButton";
@@ -199,7 +203,21 @@ const ProfileEditScreen = () => {
       });
 
       if (response.status === 200) {
-        Alert.alert("Success", "User data updated successfully");
+        Dialog.show({
+          type: ALERT_TYPE.SUCCESS,
+          title: "Success",
+          textBody: "Perbarui profile berhasil",
+          button: "OK",
+          onPressButton: () => {
+            // Navigate after the dialog is closed
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [{ name: "profile" }],
+              })
+            );
+          },
+        });
 
         // Update AsyncStorage with new data
         await AsyncStorage.setItem("username", name);
@@ -207,13 +225,6 @@ const ProfileEditScreen = () => {
         await AsyncStorage.setItem("domisili", selectedValue);
         await AsyncStorage.setItem("umur", age);
         await AsyncStorage.setItem("avatar", avatar);
-
-        navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [{ name: "profile" }],
-          })
-        );
       } else {
         Alert.alert("Error", "Failed to update user data");
       }
@@ -230,116 +241,118 @@ const ProfileEditScreen = () => {
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={{ flexGrow: 1 }}
-      style={styles.scrollViewContent}
-    >
-      {loading && (
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
-          <ActivityIndicator size="large" color="#0000ff" />
-        </View>
-      )}
-      {!loading && (
-        <>
-          <View style={styles.headerContainer}>
-            {previewAvatar ? (
-              <>
+    <AlertNotificationRoot>
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        style={styles.scrollViewContent}
+      >
+        {loading && (
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <ActivityIndicator size="large" color="#0000ff" />
+          </View>
+        )}
+        {!loading && (
+          <>
+            <View style={styles.headerContainer}>
+              {previewAvatar ? (
+                <>
+                  <Image
+                    source={{ uri: previewAvatar }}
+                    style={styles.profilePicture}
+                  />
+                  <Text style={styles.previewText}>(image preview)</Text>
+                </>
+              ) : avatar ? (
+                <Image source={{ uri: avatar }} style={styles.profilePicture} />
+              ) : (
                 <Image
-                  source={{ uri: previewAvatar }}
+                  source={require("../../assets/user.png")}
                   style={styles.profilePicture}
                 />
-                <Text style={styles.previewText}>(image preview)</Text>
-              </>
-            ) : avatar ? (
-              <Image source={{ uri: avatar }} style={styles.profilePicture} />
-            ) : (
-              <Image
-                source={require("../../assets/user.png")}
-                style={styles.profilePicture}
-              />
-            )}
-            <TouchableOpacity onPress={handleChooseAvatar}>
-              <Text style={styles.headerText}>Ganti Avatar</Text>
-            </TouchableOpacity>
-          </View>
+              )}
+              <TouchableOpacity onPress={handleChooseAvatar}>
+                <Text style={styles.headerText}>Ganti Avatar</Text>
+              </TouchableOpacity>
+            </View>
 
-          <View style={styles.container}>
-            <View style={styles.singleInput}>
-              <Text style={styles.inputLabel}>Nama Pengguna</Text>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.input}
-                  value={name}
-                  onChangeText={setName}
-                  placeholderTextColor="black"
-                />
+            <View style={styles.container}>
+              <View style={styles.singleInput}>
+                <Text style={styles.inputLabel}>Nama Pengguna</Text>
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    style={styles.input}
+                    value={name}
+                    onChangeText={setName}
+                    placeholderTextColor="black"
+                  />
+                </View>
+              </View>
+              <View style={styles.singleInput}>
+                <Text style={styles.inputLabel}>Email</Text>
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    style={styles.input}
+                    value={email}
+                    onChangeText={setEmail}
+                    placeholderTextColor="black"
+                  />
+                </View>
+              </View>
+              <View style={styles.singleInput}>
+                <Text style={styles.inputLabel}>Umur</Text>
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    style={styles.input}
+                    value={age}
+                    onChangeText={setAge}
+                    placeholderTextColor="black"
+                    keyboardType="numeric"
+                  />
+                </View>
+              </View>
+              <View style={styles.singleInput}>
+                <Text style={styles.inputLabel}>Domisili</Text>
+                <View style={styles.inputContainer}>
+                  <Picker
+                    selectedValue={selectedValue}
+                    style={{
+                      height: 50,
+                      width: "100%",
+                      transform: [{ translateY: -7 }],
+                    }}
+                    onValueChange={(itemValue) => setSelectedValue(itemValue)}
+                  >
+                    <Picker.Item label="-- Pilih domisili --" value="" />
+                    {provinces.map((province) => (
+                      <Picker.Item
+                        key={province.id}
+                        label={province.name}
+                        value={province.name}
+                      />
+                    ))}
+                  </Picker>
+                </View>
+              </View>
+              <View
+                style={{
+                  marginTop: 20,
+                  paddingHorizontal: 100,
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  columnGap: 20,
+                }}
+              >
+                <DangerButton title="Batalkan" onPress={cancelEdit} />
+                <PrimaryButton title="Simpan" onPress={saveUserData} />
               </View>
             </View>
-            <View style={styles.singleInput}>
-              <Text style={styles.inputLabel}>Email</Text>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.input}
-                  value={email}
-                  onChangeText={setEmail}
-                  placeholderTextColor="black"
-                />
-              </View>
-            </View>
-            <View style={styles.singleInput}>
-              <Text style={styles.inputLabel}>Umur</Text>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.input}
-                  value={age}
-                  onChangeText={setAge}
-                  placeholderTextColor="black"
-                  keyboardType="numeric"
-                />
-              </View>
-            </View>
-            <View style={styles.singleInput}>
-              <Text style={styles.inputLabel}>Domisili</Text>
-              <View style={styles.inputContainer}>
-                <Picker
-                  selectedValue={selectedValue}
-                  style={{
-                    height: 50,
-                    width: "100%",
-                    transform: [{ translateY: -7 }],
-                  }}
-                  onValueChange={(itemValue) => setSelectedValue(itemValue)}
-                >
-                  <Picker.Item label="-- Pilih domisili --" value="" />
-                  {provinces.map((province) => (
-                    <Picker.Item
-                      key={province.id}
-                      label={province.name}
-                      value={province.name}
-                    />
-                  ))}
-                </Picker>
-              </View>
-            </View>
-            <View
-              style={{
-                marginTop: 20,
-                paddingHorizontal: 100,
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
-                columnGap: 20,
-              }}
-            >
-              <DangerButton title="Batalkan" onPress={cancelEdit} />
-              <PrimaryButton title="Simpan" onPress={saveUserData} />
-            </View>
-          </View>
-        </>
-      )}
-    </ScrollView>
+          </>
+        )}
+      </ScrollView>
+    </AlertNotificationRoot>
   );
 };
 
