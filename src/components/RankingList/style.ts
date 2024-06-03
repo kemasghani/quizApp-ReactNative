@@ -6,6 +6,11 @@ export const styles = StyleSheet.create({
   container: {
     backgroundColor: '#333238',
   },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   row: {
     flexDirection: 'row',
     alignItems: 'center',

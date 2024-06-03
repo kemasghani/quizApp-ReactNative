@@ -1,12 +1,5 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  Image,
-  TextInput,
-  TouchableOpacity,
-  ActivityIndicator,
-} from "react-native";
+import React, { useState } from "react";
+import { View, Text, Image, TextInput, TouchableOpacity } from "react-native";
 import { styles } from "./style";
 import PrimaryButton from "../../components/PrimaryButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -22,7 +15,6 @@ import { API_URL } from "@env";
 
 export function Login() {
   const { navigate } = useNavigation();
-  const [userData, setUserData] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -37,21 +29,17 @@ export function Login() {
       };
       console.log("Request Body:", requestBody);
 
-      const response = await axios.post(
-        `${API_URL}/user/login`,
-        requestBody,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.post(`${API_URL}/user/login`, requestBody, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       const userId = response.data.data.id;
       const username = response.data.data.username;
       const getdata = await axios.get(`${API_URL}/user/${userId}`);
-      console.log("userData:", getdata.data[0].umur);
-      setUserData(getdata.data[0]);
+      const userData = getdata.data[0];
+      console.log("userData:", userData.umur);
 
       // Helper function to store non-null/undefined values in AsyncStorage
       const safeSetItem = async (key, value) => {
@@ -64,8 +52,8 @@ export function Login() {
       await safeSetItem("userId", userId);
       await safeSetItem("tokenEmail", email);
       await safeSetItem("username", username);
-      await safeSetItem("umur", userData.umur);
       await safeSetItem("domisili", userData.domisili);
+      await safeSetItem("umur", userData.umur);
       await safeSetItem("avatar", userData.avatar);
       await safeSetItem("loggedIn", "true");
 
@@ -82,7 +70,6 @@ export function Login() {
       console.log("modal");
     }
   };
-
 
   return (
     <AlertNotificationRoot>

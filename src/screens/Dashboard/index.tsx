@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, View, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Avatar from "../../assets/avatar.svg";
 import { Header } from "../../components/Header";
 import { MateriCard } from "../../components/MateriCard";
 import { styles } from "./styles";
 import { allMateri } from "../../data/materi";
+import axios from "axios";
+import { API_URL } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export function Dashboard() {
   const [quizzes, setQuizzes] = useState(allMateri);
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState(null);
+  const [avatar, setAvatar] = useState(null);
   const [loading, setLoading] = useState(true); // Added loading state
   const navigation = useNavigation();
 
@@ -19,45 +21,46 @@ export function Dashboard() {
   };
 
   useEffect(() => {
-    const getUsername = async () => {
+    const fetchUserData = async () => {
       try {
-        const username = await AsyncStorage.getItem("username");
-        const domisili = await AsyncStorage.getItem("domisili");
-        const umur = await AsyncStorage.getItem("umur");
-        console.log(domisili);
-        console.log(umur);
-        setUsername(username);
-        setLoading(false); // Set loading to false after username is retrieved
+        const userId = await AsyncStorage.getItem("userId");
+        const response = await axios.get(`${API_URL}/user/${userId}`);
+        const userData = response.data[0];
+        setUsername(userData.username);
+        setAvatar(userData.avatar);
+        setLoading(false);
       } catch (error) {
-        console.error("Error retrieving username:", error);
+        console.error("Error fetching user data:", error);
       }
     };
-    getUsername();
 
     const checkLoggedIn = async () => {
       const loggedIn = await AsyncStorage.getItem("tokenEmail");
-      await AsyncStorage.setItem("login", "false");
-      console.log(
-        `==========================================${loggedIn}============================================`
-      );
-      if (loggedIn == "false" || loggedIn == null) {
+      if (!loggedIn) {
         navigation.navigate("login");
       }
     };
 
+    fetchUserData();
     checkLoggedIn();
   }, [navigation]);
 
   return (
     <View style={styles.container}>
       {loading ? (
-        <Text>...</Text> // Show loading indicator while fetching username
+        <Header
+          icon1="https://res.cloudinary.com/dsezjy9ur/image/upload/v1717399791/avatars/rq8qnzgllbezas5ak6wr.jpg"
+          icon2={null}
+          title={`Selamat Belajar, loading ... !`}
+          subtitle="dashboard"
+          onPress={() => handleNavigate("history")}
+        />
       ) : (
         <Header
-          icon1={Avatar}
+          icon1={avatar}
           icon2={null}
-          title={`Selamat Datang, ${username} !`}
-          subtitle="Selamat belajar!"
+          title={`Selamat Belajar,  ${username} !`}
+          subtitle="dashboard"
           onPress={() => handleNavigate("history")}
         />
       )}

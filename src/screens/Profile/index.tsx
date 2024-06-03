@@ -6,41 +6,35 @@ import EditIcon from "../../assets/edit-icon.svg";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import axios from "axios";
 import { API_URL } from "@env";
-import {
-  useNavigation,
-  useRoute,
-  CommonActions,
-} from "@react-navigation/native";
+import { useNavigation, CommonActions } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Profile: React.FC = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [avatar, setAvatar] = useState(null);
-  const [domisili, setDomisili] = useState(null);
-  const [umur, setUmur] = useState(null);
-  const [username, setUsername] = useState(null);
-  const [email, setEmail] = useState(null);
 
-  const {navigate} = useNavigation();
+  const { navigate } = useNavigation();
   const navigation = useNavigation();
+
   useEffect(() => {
     const fetchUserData = async () => {
+      setLoading(true);
       try {
-        const avatar = await AsyncStorage.getItem("avatar");
-        const domisili = await AsyncStorage.getItem("domisili");
-        const umur = await AsyncStorage.getItem("umur");
-        const email = await AsyncStorage.getItem("tokenEmail");
-        const username = await AsyncStorage.getItem("username");
-        console.log(`============${username}============`);
-        setAvatar(avatar);
-        setDomisili(domisili);
-        setUmur(umur);
-        setUsername(username);
-        setEmail(email);
-        setLoading(false);
+        const userId = await AsyncStorage.getItem("userId");
+        if (!userId) {
+          Alert.alert("Error", "User ID not found in storage");
+          setLoading(false);
+          return;
+        }
+
+        const response = await axios.get(`${API_URL}/user/${userId}`);
+        const userData = response.data[0];
+
+        setUserData(userData);
       } catch (error) {
         console.error("Error fetching user data:", error);
+        Alert.alert("Error", "Failed to fetch user data");
+      } finally {
         setLoading(false);
       }
     };
@@ -49,7 +43,7 @@ const Profile: React.FC = () => {
   }, []);
 
   const truncateUsername = (username) => {
-    return username.length > 10 ? username.substring(0, 10) + "..." : username;
+    return username.length > 10 ? username.substring(0, 17) + "..." : username;
   };
 
   const handleLogout = async () => {
@@ -73,21 +67,26 @@ const Profile: React.FC = () => {
       </View>
       <View style={styles.container}>
         <View style={styles.profileContainer}>
-          {avatar ? (
+          {userData && userData.avatar && !loading ? (
             <Image
-              source={{ uri: avatar }}
+              source={{ uri: `${userData.avatar}` }}
               style={{ width: 70, height: 70, borderRadius: 50 }}
             />
           ) : (
-            <Avatar style={styles.profilePicture} width={70} height={70} />
+            <Image
+              source={require("../../assets/user.png")}
+              style={{ width: 70, height: 70, borderRadius: 50 }}
+            />
           )}
 
           <View style={styles.profileInfo}>
             <Text style={styles.nameText}>
-              {loading ? "loading..." : truncateUsername(username)}
+              {loading
+                ? "loading..."
+                : truncateUsername(userData?.username || "")}
             </Text>
             <Text style={styles.emailText}>
-              {loading ? "loading..." : email}
+              {loading ? "loading..." : truncateUsername(userData?.email || "")}
             </Text>
           </View>
           <TouchableOpacity
@@ -108,16 +107,20 @@ const Profile: React.FC = () => {
             </View>
             <View style={[styles.textContainer, styles.rightAlignedText]}>
               <Text style={[styles.regularText]}>
-                {loading ? "loading..." : truncateUsername(username)}
+                {loading
+                  ? "loading..."
+                  : truncateUsername(userData?.username || "")}
               </Text>
               <Text style={[styles.regularText]}>
-                {loading ? "loading..." : email}
+                {loading
+                  ? "loading..."
+                  : truncateUsername(userData?.email || "")}
               </Text>
               <Text style={[styles.regularText]}>
-                {loading ? "loading..." : domisili}
+                {loading ? "loading..." : userData?.domisili || ""}
               </Text>
               <Text style={[styles.regularText]}>
-                {loading ? "loading..." : umur}
+                {loading ? "loading..." : userData?.umur || ""}
               </Text>
             </View>
           </View>

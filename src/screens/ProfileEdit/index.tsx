@@ -12,26 +12,28 @@ import {
 import { Picker } from "@react-native-picker/picker";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, CommonActions } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
+import * as FileSystem from "expo-file-system";
+import * as ImageManipulator from "expo-image-manipulator";
 
 import { styles } from "./style";
 import PrimaryButton from "../../components/PrimaryButton";
 import DangerButton from "../../components/DangerButton";
-import Avatar from "../../assets/avatar.svg";
 import { API_URL } from "@env";
 
-const ProfileEditScreen: React.FC = () => {
-  const { navigate } = useNavigation();
+const ProfileEditScreen = () => {
+  const navigation = useNavigation();
   const [selectedValue, setSelectedValue] = useState("");
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [avatar, setAvatar] = useState(null);
-  const [previewAvatar, setPreviewAvatar] = useState(null); // New state for previewing the image
+  const [previewAvatar, setPreviewAvatar] = useState(null);
   const [provinces, setProvinces] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -52,7 +54,7 @@ const ProfileEditScreen: React.FC = () => {
         setUsername(userData.username);
         setEmail(userData.email);
         setSelectedValue(userData.domisili);
-        setAvatar(userData.avatar); // Assuming avatar is a property of user data
+        setAvatar(userData.avatar);
       } catch (error) {
         console.error("Failed to fetch user data", error);
         Alert.alert("Error", "Failed to fetch user data");
@@ -85,7 +87,7 @@ const ProfileEditScreen: React.FC = () => {
       const permissionResult =
         await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-      if (permissionResult.granted === false) {
+      if (!permissionResult.granted) {
         Alert.alert("Permission to access camera roll is required!");
         return;
       }
@@ -105,6 +107,7 @@ const ProfileEditScreen: React.FC = () => {
       if (result.assets && result.assets.length > 0) {
         const uri = result.assets[0].uri;
         setPreviewAvatar(uri); // Set the preview image URI
+        await uploadAvatar(uri); // Upload the image as soon as it's picked
       } else {
         console.log("No URI found in the result", result);
         Alert.alert("Error", "Failed to pick an image");
@@ -123,18 +126,29 @@ const ProfileEditScreen: React.FC = () => {
     }
 
     const userId = await AsyncStorage.getItem("userId");
-    const filename = uri.split("/").pop(); // Extracting the file name from the URI
-    const formData = new FormData();
-    formData.append("avatar", {
-      uri,
-      name: filename,
-      type: "image/jpeg",
-    });
+    if (!userId) {
+      Alert.alert("Error", "User ID not found in storage");
+      return;
+    }
+
+    setUploading(true);
 
     try {
-      console.log(
-        `Uploading avatar for userId: ${userId} with filename: ${filename}`
+      // Compress the image
+      const manipResult = await ImageManipulator.manipulateAsync(
+        uri,
+        [{ resize: { width: 300, height: 300 } }],
+        { compress: 0.5, format: ImageManipulator.SaveFormat.JPEG }
       );
+
+      const filename = manipResult.uri.split("/").pop();
+      const formData = new FormData();
+      formData.append("avatar", {
+        uri: manipResult.uri,
+        name: filename,
+        type: "image/jpeg",
+      });
+
       const response = await axios.post(
         `${API_URL}/user/${userId}/upload-avatar`,
         formData,
@@ -146,11 +160,9 @@ const ProfileEditScreen: React.FC = () => {
       );
 
       if (response.status === 200) {
-        console.log("Avatar uploaded successfully:", response.data);
-        Alert.alert("Success", "Avatar uploaded successfully");
         const updatedUser = response.data.user;
-        console.log("Updated user data:", updatedUser);
-        setAvatar(updatedUser.avatar); // Update the avatar with the filename returned from the server
+        setAvatar(updatedUser.avatar); // Update the avatar with the URL from the server
+        console.log("Avatar uploaded successfully:", response.data);
       } else {
         console.log("Failed to upload avatar:", response);
         Alert.alert("Error", "Failed to upload avatar");
@@ -158,6 +170,8 @@ const ProfileEditScreen: React.FC = () => {
     } catch (error) {
       console.error("Error uploading avatar", error);
       Alert.alert("Error", "Error uploading avatar");
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -177,10 +191,6 @@ const ProfileEditScreen: React.FC = () => {
         return;
       }
 
-      if (previewAvatar) {
-        await uploadAvatar(previewAvatar);
-      }
-
       const response = await axios.put(`${API_URL}/user/${userId}`, {
         username: name,
         email,
@@ -190,7 +200,20 @@ const ProfileEditScreen: React.FC = () => {
 
       if (response.status === 200) {
         Alert.alert("Success", "User data updated successfully");
-        navigate("profile");
+
+        // Update AsyncStorage with new data
+        await AsyncStorage.setItem("username", name);
+        await AsyncStorage.setItem("tokenEmail", email);
+        await AsyncStorage.setItem("domisili", selectedValue);
+        await AsyncStorage.setItem("umur", age);
+        await AsyncStorage.setItem("avatar", avatar);
+
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: "profile" }],
+          })
+        );
       } else {
         Alert.alert("Error", "Failed to update user data");
       }
@@ -202,15 +225,22 @@ const ProfileEditScreen: React.FC = () => {
     }
   };
 
-  const cancelEdit = async () => {
-    navigate("profile");
+  const cancelEdit = () => {
+    navigation.navigate("profile");
   };
+
   return (
     <ScrollView
       contentContainerStyle={{ flexGrow: 1 }}
       style={styles.scrollViewContent}
     >
-      {loading && <ActivityIndicator size="large" color="#0000ff" />}
+      {loading && (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      )}
       {!loading && (
         <>
           <View style={styles.headerContainer}>
@@ -223,12 +253,12 @@ const ProfileEditScreen: React.FC = () => {
                 <Text style={styles.previewText}>(image preview)</Text>
               </>
             ) : avatar ? (
+              <Image source={{ uri: avatar }} style={styles.profilePicture} />
+            ) : (
               <Image
-                source={{ uri: `${avatar}` }}
+                source={require("../../assets/user.png")}
                 style={styles.profilePicture}
               />
-            ) : (
-              <Avatar style={styles.profilePicture} width={70} height={70} />
             )}
             <TouchableOpacity onPress={handleChooseAvatar}>
               <Text style={styles.headerText}>Ganti Avatar</Text>
@@ -280,9 +310,7 @@ const ProfileEditScreen: React.FC = () => {
                     width: "100%",
                     transform: [{ translateY: -7 }],
                   }}
-                  onValueChange={(itemValue, itemIndex) =>
-                    setSelectedValue(itemValue)
-                  }
+                  onValueChange={(itemValue) => setSelectedValue(itemValue)}
                 >
                   <Picker.Item label="-- Pilih domisili --" value="" />
                   {provinces.map((province) => (
