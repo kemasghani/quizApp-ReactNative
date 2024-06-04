@@ -13,7 +13,9 @@ export function Dashboard() {
   const [quizzes, setQuizzes] = useState(allMateri);
   const [username, setUsername] = useState(null);
   const [avatar, setAvatar] = useState(null);
-  const [loading, setLoading] = useState(true); // Added loading state
+  const [loading, setLoading] = useState(true);
+  const [totalPoints, setTotalPoints] = useState(null);
+  const [rank, setRank] = useState(null);
   const navigation = useNavigation();
 
   const handleNavigate = (screenName, params) => {
@@ -24,10 +26,18 @@ export function Dashboard() {
     const fetchUserData = async () => {
       try {
         const userId = await AsyncStorage.getItem("userId");
-        const response = await axios.get(`${API_URL}/user/${userId}`);
-        const userData = response.data[0];
+        const userResponse = await axios.get(`${API_URL}/user/${userId}`);
+        const userData = userResponse.data[0];
         setUsername(userData.username);
         setAvatar(userData.avatar);
+
+        const rankingResponse = await axios.get(`${API_URL}/total-points`);
+        const rankings = rankingResponse.data;
+        const userRankData = rankings.find((user) => user.userId === userId);
+
+        setTotalPoints(userRankData.totalPoints);
+        setRank(rankings.findIndex((user) => user.userId === userId) + 1);
+
         setLoading(false);
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -67,11 +77,11 @@ export function Dashboard() {
 
       <View style={styles.infoDashboard}>
         <View style={styles.nilai}>
-          <Text style={styles.numberNilai}>785</Text>
+          <Text style={styles.numberNilai}>{totalPoints ? totalPoints : "..."}</Text>
           <Text style={styles.textNilai}>Total Nilai</Text>
         </View>
         <View style={styles.peringkat}>
-          <Text style={styles.numberPeringkat}>15</Text>
+          <Text style={styles.numberPeringkat}>{rank ? rank : "..."}</Text>
           <Text style={styles.textPeringkat}>Peringkat</Text>
         </View>
       </View>
