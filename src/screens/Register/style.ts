@@ -4,12 +4,14 @@ import { THEME } from "../../styles/theme";
 export const styles = StyleSheet.create({
   scrollViewContent: {
     backgroundColor: "#202024",
-    // flex: 1,
-    flexGrow: 1,
+
   },
 
   container: {
+    flex: 1,
     alignItems: "center",
+    backgroundColor: "#202024",
+    marginTop: -50,
   },
 
   title: {

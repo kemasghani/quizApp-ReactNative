@@ -48,6 +48,11 @@ export function Quiz() {
     null
   );
   const [statusReply, setStatusReply] = useState(0);
+  const [questionStartTime, setQuestionStartTime] = useState<number | null>(
+    null
+  );
+  const [elapsedTime, setElapsedTime] = useState<number>(0);
+  const [cumulativeElapsedTime, setCumulativeElapsedTime] = useState<number>(0);
 
   const shake = useSharedValue(0);
   const scrollY = useSharedValue(0);
@@ -109,7 +114,7 @@ export function Quiz() {
       navigate("finish", {
         points: String(points),
         total: String(quiz.questions.length),
-        quizId: quiz.id
+        quizId: quiz.id,
       });
     } catch (error) {
       console.error("Error saving quiz progress:", error);
@@ -122,6 +127,10 @@ export function Quiz() {
 
   function handleNextQuestion() {
     if (currentQuestion < quiz.questions.length - 1) {
+      const elapsed = (Date.now() - (questionStartTime ?? Date.now())) / 1000;
+      setElapsedTime(elapsed);
+      setCumulativeElapsedTime((prevState) => prevState + elapsed); // Update cumulative time
+      setStatusReply(0); // Reset the status
       setCurrentQuestion((prevState) => prevState + 1);
     } else {
       handleFinished();
@@ -272,9 +281,13 @@ export function Quiz() {
     console.log("id:", id);
 
     const quizSelected = QUIZ.filter((item) => item.id === id)[0];
-
+    console.log("===============");
+    console.log(quizSelected.level);
+    console.log("===============");
+    AsyncStorage.setItem("level", `${quizSelected.level}`);
     setQuiz(quizSelected);
     setIsLoading(false);
+    setQuestionStartTime(new Date());
   }, []);
 
   if (isLoading) {
@@ -283,7 +296,7 @@ export function Quiz() {
 
   return (
     <View style={styles.container}>
-      <OverlayFeedback status={statusReply} />
+      <OverlayFeedback status={statusReply} elapsedTime={elapsedTime} />
 
       <Animated.View style={fixedProgressBarStyles}>
         <Text style={styles.title}>{quiz.title}</Text>

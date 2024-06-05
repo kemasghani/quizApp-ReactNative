@@ -20,6 +20,16 @@ export function Login() {
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
+    if (!email || !password) {
+      Dialog.show({
+        type: ALERT_TYPE.WARNING,
+        title: "Warning",
+        textBody: "Input tidak boleh kosong",
+        button: "Close",
+      });
+      return;
+    }
+
     try {
       setLoading(true);
 
@@ -59,7 +69,6 @@ export function Login() {
 
       navigate("dashboard");
     } catch (error) {
-      setLoading(false);
       console.log(error);
       Dialog.show({
         type: ALERT_TYPE.DANGER,
@@ -68,6 +77,8 @@ export function Login() {
         button: "OK",
       });
       console.log("modal");
+    } finally {
+      setLoading(false);
     }
   };
 

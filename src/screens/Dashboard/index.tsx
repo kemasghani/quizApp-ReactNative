@@ -19,7 +19,7 @@ export function Dashboard() {
   const handleNavigate = (screenName, params) => {
     navigation.navigate(screenName, params);
   };
-
+  AsyncStorage.setItem("time", "0");
   useEffect(() => {
     const fetchUserData = async () => {
       try {

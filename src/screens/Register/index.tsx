@@ -45,6 +45,23 @@ export function Register() {
   }, []);
 
   const handleRegister = () => {
+    if (
+      !username ||
+      !email ||
+      !umur ||
+      !selectedValue ||
+      !password ||
+      !confirmPassword
+    ) {
+      Dialog.show({
+        type: ALERT_TYPE.WARNING,
+        title: "Warning",
+        textBody: "Input tidak boleh kosong",
+        button: "Close",
+      });
+      return;
+    }
+
     if (password !== confirmPassword) {
       Dialog.show({
         type: ALERT_TYPE.DANGER,
@@ -54,6 +71,7 @@ export function Register() {
       });
       return;
     }
+
     setLoading(true);
     const userData = {
       username,
@@ -94,7 +112,7 @@ export function Register() {
   return (
     <AlertNotificationRoot>
       <Header title="Back" subtitle={`Back`} icon1={Back} icon2={null} />
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+      <ScrollView style={styles.scrollViewContent}>
         <View style={styles.container}>
           <Image
             style={{ width: 300, height: 300 }}
@@ -168,9 +186,7 @@ export function Register() {
               textContent={"Loading..."}
               textStyle={styles.spinnerText}
             />
-            <View style={{
-              marginTop: 20
-            }}>
+            <View style={{ marginTop: 20 }}>
               <PrimaryButton title="Daftar" onPress={handleRegister} />
             </View>
 
