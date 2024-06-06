@@ -131,7 +131,7 @@ const Profile: React.FC = () => {
             style={styles.settingBtn}
             onPress={() => navigate("tentang")}
           >
-            <Text style={[styles.regularText, styles.boldText]}>Tentang</Text>
+            <Text style={[styles.regularText, styles.boldText]}>Tentang Kami</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.settingBtn}

@@ -21,8 +21,15 @@ export function Dashboard() {
   const handleNavigate = (screenName, params) => {
     navigation.navigate(screenName, params);
   };
-
+  AsyncStorage.setItem("time", "0");
   useEffect(() => {
+    const checkLoggedIn = async () => {
+      const loggedIn = await AsyncStorage.getItem("tokenEmail");
+      if (!loggedIn) {
+        navigation.navigate("login");
+        return;
+      }
+    };
     const fetchUserData = async () => {
       try {
         const userId = await AsyncStorage.getItem("userId");
@@ -40,19 +47,12 @@ export function Dashboard() {
 
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.log("Error fetching user data:", error);
       }
     };
 
-    const checkLoggedIn = async () => {
-      const loggedIn = await AsyncStorage.getItem("tokenEmail");
-      if (!loggedIn) {
-        navigation.navigate("login");
-      }
-    };
-
-    fetchUserData();
     checkLoggedIn();
+    fetchUserData();
   }, [navigation]);
 
   return (

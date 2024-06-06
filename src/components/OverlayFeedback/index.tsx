@@ -19,12 +19,13 @@ const STATUS = [
 
 type Props = {
   status: number;
+  elapsedTime: number;
 };
 
-export function OverlayFeedback({ status }: Props) {
+export function OverlayFeedback({ status, elapsedTime }: Props) {
   const opacity = useSharedValue(0);
   const color = STATUS[status];
-
+  ``;
   const { width, height } = useWindowDimensions();
 
   const styleAnimated = useAnimatedStyle(() => ({
@@ -32,16 +33,22 @@ export function OverlayFeedback({ status }: Props) {
   }));
 
   useEffect(() => {
-    console.log(`ini status : ${STATUS[status]}`);
+    console.log(
+      `Status: ${STATUS[status]}, Elapsed time: ${elapsedTime.toFixed(
+        2
+      )} seconds`
+    );
+    AsyncStorage.setItem("time", `${elapsedTime.toFixed(2)}`);
+    console.log(AsyncStorage.getItem("time"));
     if (STATUS[status] == "#00B37E") {
       const incrementScore = async () => {
         try {
-          const score = await AsyncStorage.getItem('score');
+          const score = await AsyncStorage.getItem("score");
           const newScore = score ? parseInt(score, 10) + 1 : 1;
-          await AsyncStorage.setItem('score', newScore.toString());
+          await AsyncStorage.setItem("score", newScore.toString());
           console.log(newScore);
         } catch (error) {
-          console.error('Failed to increment score in AsyncStorage:', error);
+          console.error("Failed to increment score in AsyncStorage:", error);
         }
       };
 

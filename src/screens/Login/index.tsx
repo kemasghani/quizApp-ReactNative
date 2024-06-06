@@ -4,7 +4,7 @@ import { styles } from "./style";
 import PrimaryButton from "../../components/PrimaryButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, CommonActions } from "@react-navigation/native";
 import {
   ALERT_TYPE,
   Dialog,
@@ -15,11 +15,22 @@ import { API_URL } from "@env";
 
 export function Login() {
   const { navigate } = useNavigation();
+  const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
+    if (!email || !password) {
+      Dialog.show({
+        type: ALERT_TYPE.WARNING,
+        title: "Warning",
+        textBody: "Input tidak boleh kosong",
+        button: "Close",
+      });
+      return;
+    }
+
     try {
       setLoading(true);
 
@@ -57,9 +68,13 @@ export function Login() {
       await safeSetItem("avatar", userData.avatar);
       await safeSetItem("loggedIn", "true");
 
-      navigate("dashboard");
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: "dashboard" }],
+        })
+      );
     } catch (error) {
-      setLoading(false);
       console.log(error);
       Dialog.show({
         type: ALERT_TYPE.DANGER,
@@ -68,6 +83,8 @@ export function Login() {
         button: "OK",
       });
       console.log("modal");
+    } finally {
+      setLoading(false);
     }
   };
 

@@ -40,7 +40,13 @@ export function InputEmail() {
       // Navigate to the next screen after receiving a successful response
       navigate("inputOtp");
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.log("Error fetching data:", error);
+      Dialog.show({
+        type: ALERT_TYPE.DANGER,
+        title: "Warning",
+        textBody: "Alamat email tidak ditemukan",
+        button: "Close",
+      });
       // Handle error as needed
     } finally {
       setLoading(false); // Hide loading spinner
