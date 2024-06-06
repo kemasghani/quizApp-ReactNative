@@ -23,6 +23,13 @@ export function Dashboard() {
   };
   AsyncStorage.setItem("time", "0");
   useEffect(() => {
+    const checkLoggedIn = async () => {
+      const loggedIn = await AsyncStorage.getItem("tokenEmail");
+      if (!loggedIn) {
+        navigation.navigate("login");
+        return;
+      }
+    };
     const fetchUserData = async () => {
       try {
         const userId = await AsyncStorage.getItem("userId");
@@ -40,19 +47,12 @@ export function Dashboard() {
 
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.log("Error fetching user data:", error);
       }
     };
 
-    const checkLoggedIn = async () => {
-      const loggedIn = await AsyncStorage.getItem("tokenEmail");
-      if (!loggedIn) {
-        navigation.navigate("login");
-      }
-    };
-
-    fetchUserData();
     checkLoggedIn();
+    fetchUserData();
   }, [navigation]);
 
   return (
@@ -77,7 +77,9 @@ export function Dashboard() {
 
       <View style={styles.infoDashboard}>
         <View style={styles.nilai}>
-          <Text style={styles.numberNilai}>{totalPoints ? totalPoints : "..."}</Text>
+          <Text style={styles.numberNilai}>
+            {totalPoints ? totalPoints : "..."}
+          </Text>
           <Text style={styles.textNilai}>Total Nilai</Text>
         </View>
         <View style={styles.peringkat}>

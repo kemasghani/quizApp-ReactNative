@@ -99,11 +99,10 @@ export function Register() {
       })
       .catch((error) => {
         setLoading(false);
-        console.error("Error registering user:", error);
         Dialog.show({
           type: ALERT_TYPE.DANGER,
           title: "Error",
-          textBody: "Registration failed",
+          textBody: "Alamat sudah ada",
           button: "OK",
         });
       });

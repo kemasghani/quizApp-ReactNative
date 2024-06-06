@@ -4,7 +4,7 @@ import { styles } from "./style";
 import PrimaryButton from "../../components/PrimaryButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, CommonActions } from "@react-navigation/native";
 import {
   ALERT_TYPE,
   Dialog,
@@ -15,6 +15,7 @@ import { API_URL } from "@env";
 
 export function Login() {
   const { navigate } = useNavigation();
+  const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -67,7 +68,12 @@ export function Login() {
       await safeSetItem("avatar", userData.avatar);
       await safeSetItem("loggedIn", "true");
 
-      navigate("dashboard");
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: "dashboard" }],
+        })
+      );
     } catch (error) {
       console.log(error);
       Dialog.show({

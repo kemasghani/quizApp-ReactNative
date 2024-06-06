@@ -9,7 +9,7 @@ export function Kebijakan() {
     <View style={styles.container}>
       <Header
         title="Kebijakan Privasi"
-        subtitle={`Back`}
+        subtitle={`profileBack`}
         icon1={Back}
         icon2={null}
       />

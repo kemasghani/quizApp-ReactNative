@@ -9,7 +9,7 @@ export function Tentang() {
     <View style={styles.container}>
       <Header
         title="Tentang Kami"
-        subtitle={`Back`}
+        subtitle={`profileBack`}
         icon1={Back}
         icon2={null}
       />
