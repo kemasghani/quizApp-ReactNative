@@ -5,7 +5,7 @@ import { Header } from "../../components/Header";
 import Close from "../../assets/close.svg";
 import { RankingList } from "../../components/RankingList";
 import axios from 'axios';
-import { API_URL } from "@env";
+import { API_URL, LOCALHOST_URL } from "@env";
 
 function Ranking() {
   const [data, setData] = useState([]);
@@ -14,7 +14,7 @@ function Ranking() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${API_URL}/total-points`);
+        const response = await axios.get(`${LOCALHOST_URL}/total-points`);
         setData(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -35,6 +35,7 @@ function Ranking() {
   }
 
   return (
+    //ss
     <View style={styles.container}>
       <Header title="Peringkat" icon1={Close} />
       <View style={{ alignItems: "center", marginTop: 15, marginBottom: 45 }}>
