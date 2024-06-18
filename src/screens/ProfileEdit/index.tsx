@@ -24,7 +24,7 @@ import {
 import { styles } from "./style";
 import PrimaryButton from "../../components/PrimaryButton";
 import DangerButton from "../../components/DangerButton";
-import { API_URL } from "@env";
+import { API_URL, LOCALHOST_URL } from "@env";
 
 const ProfileEditScreen = () => {
   const navigation = useNavigation();
@@ -32,6 +32,8 @@ const ProfileEditScreen = () => {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [username, setUsername] = useState("");
+  const [selectedKelas, setSelectedKelas] = useState("");
+
   const [email, setEmail] = useState("");
   const [avatar, setAvatar] = useState(null);
   const [previewAvatar, setPreviewAvatar] = useState(null);
@@ -58,6 +60,8 @@ const ProfileEditScreen = () => {
         setEmail(userData.email);
         setSelectedValue(userData.domisili);
         setAvatar(userData.avatar);
+        setSelectedKelas(userData.kelas); // Set the initial value of selectedKelas
+
       } catch (error) {
         console.error("Failed to fetch user data", error);
       } finally {
@@ -183,17 +187,18 @@ const ProfileEditScreen = () => {
         return;
       }
 
-      const response = await axios.put(`${API_URL}/user/${userId}`, {
+      const response = await axios.put(`${LOCALHOST_URL}/user/${userId}`, {
         username: name,
         email,
         umur: parseInt(age, 10),
         domisili: selectedValue,
+        kelas: selectedKelas, // Add the selected grade leve
       });
 
       if (response.status === 200) {
         Dialog.show({
           type: ALERT_TYPE.SUCCESS,
-          title: "Success",
+          title: "Succes",
           textBody: "Perbarui profile berhasil",
           button: "OK",
           onPressButton: () => {
@@ -213,6 +218,7 @@ const ProfileEditScreen = () => {
         await AsyncStorage.setItem("domisili", selectedValue);
         await AsyncStorage.setItem("umur", age);
         await AsyncStorage.setItem("avatar", avatar);
+        await AsyncStorage.setItem("kelas", selectedKelas); // Save the selected grade level
       } else {
       }
     } catch (error) {
@@ -220,6 +226,7 @@ const ProfileEditScreen = () => {
       setLoading(false);
     }
   };
+
 
   const cancelEdit = () => {
     navigation.navigate("profile");
@@ -297,6 +304,26 @@ const ProfileEditScreen = () => {
                   />
                 </View>
               </View>
+              <View style={styles.singleInput}>
+                <Text style={styles.inputLabel}>Kelas</Text>
+                <View style={styles.inputContainer}>
+                  <Picker
+                    selectedValue={selectedKelas}
+                    style={{
+                      height: 50,
+                      width: "100%",
+                      transform: [{ translateY: -7 }],
+                    }}
+                    onValueChange={(itemValue) => setSelectedKelas(itemValue)}
+                  >
+                    <Picker.Item label="-- Pilih kelas --" value="" />
+                    <Picker.Item label="10" value="10" />
+                    <Picker.Item label="11" value="11" />
+                    <Picker.Item label="12" value="12" />
+                  </Picker>
+                </View>
+              </View>
+
               <View style={styles.singleInput}>
                 <Text style={styles.inputLabel}>Domisili</Text>
                 <View style={styles.inputContainer}>

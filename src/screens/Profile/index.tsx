@@ -104,6 +104,7 @@ const Profile: React.FC = () => {
               <Text style={styles.regularText}>Email</Text>
               <Text style={styles.regularText}>Domisili</Text>
               <Text style={styles.regularText}>Umur</Text>
+              <Text style={styles.regularText}>Kelas</Text>
             </View>
             <View style={[styles.textContainer, styles.rightAlignedText]}>
               <Text style={[styles.regularText]}>
@@ -121,6 +122,9 @@ const Profile: React.FC = () => {
               </Text>
               <Text style={[styles.regularText]}>
                 {loading ? "loading..." : userData?.umur || ""}
+              </Text>
+              <Text style={[styles.regularText]}>
+                {loading ? "loading..." : userData?.kelas == 0 || !userData?.kelas ? "-" : userData?.kelas}
               </Text>
             </View>
           </View>
