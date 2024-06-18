@@ -7,10 +7,12 @@ export const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     backgroundColor: "#202024",
+    width: "100%",
   },
   scroll: {
     width: "100%",
     margin: "auto",
+    paddingHorizontal: "7%"
   },
   title: {
     fontSize: 24,

@@ -18,35 +18,55 @@ interface Params {
   quizId: number;
 }
 type QuizProps = (typeof QUIZ)[0];
+
 export function Finish() {
   const [finalScore, setFinalScore] = useState<string | null>(null);
   const [finalTime, setFinalTime] = useState<string | null>(null);
   const [finalLevel, setFinalLevel] = useState<string | null>(null);
+  const [proceedScore, setProceedScore] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [quiz, setQuiz] = useState<QuizProps>({} as QuizProps);
   const route = useRoute();
   const { points, total, quizId } = route.params as Params;
+  const navigation = useNavigation();
 
   useEffect(() => {
-    async function fetchScore() {
-      const score = await AsyncStorage.getItem("score");
-      const time = await AsyncStorage.getItem("time");
-      const level = await AsyncStorage.getItem("level");
-      setFinalScore(score);
-      setFinalTime(time);
-      setFinalLevel(level);
-      console.log(time);
+    async function fetchAndCalculateScore() {
+      try {
+        const scoreStr = await AsyncStorage.getItem("score");
+        const time = await AsyncStorage.getItem("time");
+        const levelStr = await AsyncStorage.getItem("level");
+
+        const score = Number(scoreStr);
+        const level = Number(levelStr);
+
+        setFinalScore(scoreStr);
+        setFinalTime(time);
+        setFinalLevel(levelStr);
+
+        const basePoints = score * level * 20;
+        const penalty = score * 10;
+        const maxPenalty = basePoints / 2;
+        const adjustedScore = basePoints - Math.min(penalty, maxPenalty);
+
+        setProceedScore(adjustedScore);
+      } catch (error) {
+        console.error(
+          "Failed to fetch score or calculate proceedScore:",
+          error
+        );
+      } finally {
+        setIsLoading(false);
+      }
     }
 
-    fetchScore();
+    fetchAndCalculateScore();
   }, []);
-
-  const navigation = useNavigation();
 
   const handleBackToDashboard = async () => {
     try {
       const userId = await AsyncStorage.getItem("userId");
 
-      // Calculate the adjusted score based on the formula
       const score = Number(finalScore);
       const level = Number(finalLevel);
       const basePoints = score * level * 20;
@@ -54,7 +74,6 @@ export function Finish() {
       const maxPenalty = basePoints / 2;
       const adjustedScore = basePoints - Math.min(penalty, maxPenalty);
 
-      console.log(quizId);
       await fetch(`${API_URL}/grade/user/${userId}/${quizId}`, {
         method: "PUT",
         headers: {
@@ -78,17 +97,24 @@ export function Finish() {
     }
   };
 
+  if (isLoading) {
+    return (
+      <View style={styles.container}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <Stars />
-
       <View style={styles.message}>
-        <Text style={styles.title}>Selamat!</Text>
+        <Text style={styles.title}>Skor anda</Text>
+        <Text style={styles.score}>{proceedScore}</Text>
         <Text style={styles.subtitle}>
           Anda memiliki total benar {finalScore} dari {total} soal
         </Text>
       </View>
-
       <Button title="Back to Dashboard" onPress={handleBackToDashboard} />
     </View>
   );

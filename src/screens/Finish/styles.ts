@@ -18,6 +18,13 @@ export const styles = StyleSheet.create({
     fontSize: 24,
     marginTop: 41
   },
+  score: {
+    color: THEME.COLORS.GREY_100,
+    fontFamily: THEME.FONTS.REGULAR,
+    fontSize: 33,
+    fontWeight: 'bold',
+    marginTop: 8
+  },
   subtitle: {
     color: THEME.COLORS.GREY_100,
     fontFamily: THEME.FONTS.REGULAR,

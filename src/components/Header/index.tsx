@@ -22,7 +22,13 @@ export function Header({
   const { navigate } = useNavigation();
 
   const handleNavigation = () => {
-    if (subtitle === "profileBack") {
+    if (title === "Notifikasi") {
+
+    }
+    else if (title === "Riwayat") {
+
+    }
+    else if (subtitle === "profileBack") {
       navigate("profile");
     } else if (title === "Back") {
       navigate("login");

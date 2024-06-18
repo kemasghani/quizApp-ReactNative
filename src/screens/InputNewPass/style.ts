@@ -7,6 +7,10 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#202024",
   },
+  scroll: {
+    flex: 1,
+    backgroundColor: "#202024",
+  },
   title: {
     fontSize: 24,
     width: "100%",
@@ -18,8 +22,8 @@ export const styles = StyleSheet.create({
     width: "80%",
     display: "flex",
     flexDirection: "column",
-    rowGap: 20,
-    marginBottom: 70,
+    rowGap: 10,
+    marginBottom: 30,
   },
   subTitle: {
     fontSize: 14,
@@ -38,7 +42,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "#E1E1E6",
     marginBottom: 16,
     paddingLeft: 12,
-    marginTop: 44,
+    marginTop: 34,
   },
   spinnerText: {
     color: "white",

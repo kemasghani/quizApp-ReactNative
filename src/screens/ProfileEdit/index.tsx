@@ -45,7 +45,6 @@ const ProfileEditScreen = () => {
       try {
         const userId = await AsyncStorage.getItem("userId");
         if (!userId) {
-          Alert.alert("Error", "User ID not found in storage");
           setLoading(false);
           return;
         }
@@ -61,7 +60,6 @@ const ProfileEditScreen = () => {
         setAvatar(userData.avatar);
       } catch (error) {
         console.error("Failed to fetch user data", error);
-        Alert.alert("Error", "Failed to fetch user data");
       } finally {
         setLoading(false);
       }
@@ -79,7 +77,6 @@ const ProfileEditScreen = () => {
         setProvinces(response.data);
       } catch (error) {
         console.error("Failed to fetch provinces", error);
-        Alert.alert("Error", "Failed to fetch provinces");
       }
     };
 
@@ -92,7 +89,6 @@ const ProfileEditScreen = () => {
         await ImagePicker.requestMediaLibraryPermissionsAsync();
 
       if (!permissionResult.granted) {
-        Alert.alert("Permission to access camera roll is required!");
         return;
       }
 
@@ -114,24 +110,20 @@ const ProfileEditScreen = () => {
         await uploadAvatar(uri); // Upload the image as soon as it's picked
       } else {
         console.log("No URI found in the result", result);
-        Alert.alert("Error", "Failed to pick an image");
       }
     } catch (error) {
       console.error("Error picking an image", error);
-      Alert.alert("Error", "Error picking an image");
     }
   };
 
   const uploadAvatar = async (uri) => {
     if (!uri) {
       console.error("No URI provided for avatar upload");
-      Alert.alert("Error", "No URI provided for avatar upload");
       return;
     }
 
     const userId = await AsyncStorage.getItem("userId");
     if (!userId) {
-      Alert.alert("Error", "User ID not found in storage");
       return;
     }
 
@@ -169,11 +161,9 @@ const ProfileEditScreen = () => {
         console.log("Avatar uploaded successfully:", response.data);
       } else {
         console.log("Failed to upload avatar:", response);
-        Alert.alert("Error", "Failed to upload avatar");
       }
     } catch (error) {
       console.error("Error uploading avatar", error);
-      Alert.alert("Error", "Error uploading avatar");
     } finally {
       setUploading(false);
     }
@@ -181,7 +171,6 @@ const ProfileEditScreen = () => {
 
   const saveUserData = async () => {
     if (!name || !email || !age || !selectedValue) {
-      Alert.alert("Error", "Please fill all fields");
       return;
     }
 
@@ -190,7 +179,6 @@ const ProfileEditScreen = () => {
     try {
       const userId = await AsyncStorage.getItem("userId");
       if (!userId) {
-        Alert.alert("Error", "User ID not found in storage");
         setLoading(false);
         return;
       }
@@ -226,11 +214,8 @@ const ProfileEditScreen = () => {
         await AsyncStorage.setItem("umur", age);
         await AsyncStorage.setItem("avatar", avatar);
       } else {
-        Alert.alert("Error", "Failed to update user data");
       }
     } catch (error) {
-      console.error("Error updating user data", error);
-      Alert.alert("Error", "Error updating user data");
     } finally {
       setLoading(false);
     }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, TextInput, Button } from "react-native";
+import { View, Text, ScrollView, Image, TextInput, Button } from "react-native";
 import axios from "axios";
 import { styles } from "./style";
 import PrimaryButton from "../../components/PrimaryButton";
@@ -68,45 +68,47 @@ export function InputNewPass() {
 
   return (
     <AlertNotificationRoot>
-      <View style={styles.container}>
-        <Header title="Back" subtitle={`Back`} icon1={Back} icon2={null} />
-        <Spinner
-          visible={loading}
-          textContent={"Loading..."}
-          textStyle={styles.spinnerText}
-        />
-        <Image
-          style={{ width: 300, height: 300 }}
-          source={require("../../assets/smarta-icon.png")}
-        />
-        <View style={styles.content}>
-          <View>
-            <Text style={styles.title}>Pemulihan Kata Sandi</Text>
+      <Header title="Back" subtitle={`Back`} icon1={Back} icon2={null} />
+      <ScrollView style={styles.scroll}>
+        <View style={styles.container}>
+          <Spinner
+            visible={loading}
+            textContent={"Loading..."}
+            textStyle={styles.spinnerText}
+          />
+          <Image
+            style={{ width: 300, height: 300 }}
+            source={require("../../assets/smarta-icon.png")}
+          />
+          <View style={styles.content}>
+            <View>
+              <Text style={styles.title}>Pemulihan Kata Sandi</Text>
+            </View>
+            <View>
+              <Text style={styles.subTitle}>Masukkan kata sandi baru</Text>
+            </View>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Masukkan password baru"
+                secureTextEntry={true}
+                value={newPassword}
+                onChangeText={(text) => setNewPassword(text)}
+              />
+            </View>
+            <View style={styles.inputContainer2}>
+              <TextInput
+                style={styles.input}
+                placeholder="Masukkan konfirmasi password"
+                secureTextEntry={true}
+                value={confirmPassword}
+                onChangeText={(text) => setConfirmPassword(text)}
+              />
+            </View>
           </View>
-          <View>
-            <Text style={styles.subTitle}>Masukkan kata sandi baru</Text>
-          </View>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.input}
-              placeholder="Masukkan password baru"
-              secureTextEntry={true}
-              value={newPassword}
-              onChangeText={(text) => setNewPassword(text)}
-            />
-          </View>
-          <View style={styles.inputContainer2}>
-            <TextInput
-              style={styles.input}
-              placeholder="Masukkan konfirmasi password"
-              secureTextEntry={true}
-              value={confirmPassword}
-              onChangeText={(text) => setConfirmPassword(text)}
-            />
-          </View>
+          <PrimaryButton title="Lanjutkan" onPress={handleUpdatePassword} />
         </View>
-        <PrimaryButton title="Lanjutkan" onPress={handleUpdatePassword} />
-      </View>
+      </ScrollView>
     </AlertNotificationRoot>
   );
 }

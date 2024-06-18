@@ -130,7 +130,6 @@ export function Quiz() {
       const elapsed = (Date.now() - (questionStartTime ?? Date.now())) / 1000;
       setElapsedTime(elapsed);
       setCumulativeElapsedTime((prevState) => prevState + elapsed); // Update cumulative time
-      setStatusReply(0); // Reset the status
       setCurrentQuestion((prevState) => prevState + 1);
     } else {
       handleFinished();

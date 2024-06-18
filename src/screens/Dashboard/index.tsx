@@ -6,7 +6,7 @@ import { MateriCard } from "../../components/MateriCard";
 import { styles } from "./styles";
 import { allMateri } from "../../data/materi";
 import axios from "axios";
-import { API_URL, LOCALHOST_URL } from "@env";
+import { API_URL } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export function Dashboard() {
@@ -33,12 +33,12 @@ export function Dashboard() {
     const fetchUserData = async () => {
       try {
         const userId = await AsyncStorage.getItem("userId");
-        const userResponse = await axios.get(`${LOCALHOST_URL}/user/${userId}`);
+        const userResponse = await axios.get(`${API_URL}/user/${userId}`);
         const userData = userResponse.data[0];
         setUsername(userData.username);
         setAvatar(userData.avatar);
 
-        const rankingResponse = await axios.get(`${LOCALHOST_URL}/total-points`);
+        const rankingResponse = await axios.get(`${API_URL}/total-points`);
         const rankings = rankingResponse.data;
         const userRankData = rankings.find((user) => user.userId === userId);
 
